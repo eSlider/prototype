@@ -16,23 +16,23 @@ import com.prototype.prototype.activity.MainActivity;
 import com.prototype.prototype.domain.Advert;
 import com.prototype.prototype.domain.dto.AdvertDTO;
 
-public class AdvertListAdapter extends RecyclerView.Adapter<AdvertListAdapter.AdvertViewHolder> {
+public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ShopViewHolder> {
 
     private AdvertDTO advertDTO = new AdvertDTO();
     private Context context;
 
-    public AdvertListAdapter() {
+    public ShopListAdapter() {
     }
 
     @Override
-    public AdvertViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.advert_item, parent, false);
+    public ShopViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shop_item, parent, false);
         context = parent.getContext();
-        return new AdvertViewHolder(view);
+        return new ShopViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(AdvertViewHolder holder, final int position) {
+    public void onBindViewHolder(ShopViewHolder holder, final int position) {
         final Advert advert = advertDTO.getData().get(position);
         holder.title.setText(advert.getTitle());
         holder.description.setText(advert.getDescription());
@@ -43,13 +43,13 @@ public class AdvertListAdapter extends RecyclerView.Adapter<AdvertListAdapter.Ad
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (context == null)
-                    return;
-                if (context instanceof MainActivity) {
-                    MainActivity mainActivity = (MainActivity) context;
-
-                    mainActivity.switchContent(advert);
-                }
+//                if (context == null)
+//                    return;
+//                if (context instanceof MainActivity) {
+//                    MainActivity mainActivity = (MainActivity) context;
+//
+//                    mainActivity.switchContent(advert);
+//                }
             }
         });
     }
@@ -63,19 +63,19 @@ public class AdvertListAdapter extends RecyclerView.Adapter<AdvertListAdapter.Ad
         this.advertDTO = advertDTO;
     }
 
-    public static class AdvertViewHolder extends RecyclerView.ViewHolder {
+    public static class ShopViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
         TextView title;
         TextView description;
         ImageView pic;
 
-        public AdvertViewHolder(View itemView) {
+        public ShopViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.card_view);
-            title = (TextView) itemView.findViewById(R.id.tv_title);
-            description = (TextView) itemView.findViewById(R.id.tv_description);
-            pic = (ImageView) itemView.findViewById(R.id.iv_pic);
+            cardView = (CardView) itemView.findViewById(R.id.shop_card_view);
+            title = (TextView) itemView.findViewById(R.id.shop_tv_title);
+            description = (TextView) itemView.findViewById(R.id.shop_tv_description);
+            pic = (ImageView) itemView.findViewById(R.id.shop_iv_pic);
         }
     }
 }
