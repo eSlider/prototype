@@ -12,4 +12,20 @@
     <string name="btn_buy">buy</string>
     <string name="cart_title">Cart :</string>
     <string name="menu_in_cart">in cart</string>
+    <string name="send_title">Send</string>
+    <string name="text_your_balance">Your balance</string>
+    <string name="change_title">Change</string>
+    <string name="purse_title">Purse</string>
+    <string name="favorite_menu">favorite</string>
+    <string name="qrcode_menu">scan qrcode</string>
+    <string name="address_title">Address</string>
+    <string name="address_recepient_title">Address recepient</string>
+    <string name="amount_title">Amount</string>
+    <string name="hint_input_address_recepient">input address recepient 0x00..</string>
+    <string name="hint_input_amount">input amount coin</string>
+    <string name="name_template_title">Name template</string>
+    <string name="hint_input_name_template">input name template</string>
+    <string name="title_your_address">Your address</string>
+    <string name="title_qrcode">Your QR CODE</string>
+    <string name="receive_title">Receive</string>
 </resources>

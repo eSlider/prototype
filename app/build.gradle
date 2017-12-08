@@ -22,6 +22,10 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
     }
+//    compileOptions {
+//        android.compileOptions.sourceCompatibility 1.8
+//        android.compileOptions.targetCompatibility 1.8
+//    }
 }
 
 dependencies {
@@ -32,7 +36,19 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.2'
-    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+//    implementation 'org.web3j:core:3.1.0'
+//    implementation 'org.web3j:core:3.0.1-android'
+    implementation 'org.web3j:core-android:2.2.1'
+    implementation 'com.google.zxing:core:3.3.1'
+    implementation 'me.dm7.barcodescanner:zxing:1.9'
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+
+    implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     testImplementation 'junit:junit:4.12'
+
+//    compile 'com.madgag.spongycastle:core:1.54.0.0'
+//    compile 'com.madgag.spongycastle:prov:1.54.0.0'
+//    compile 'com.madgag.spongycastle:pkix:1.54.0.0'
+//    compile 'com.madgag.spongycastle:pg:1.54.0.0'
 
 }
