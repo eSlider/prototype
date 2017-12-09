@@ -1,41 +1,42 @@
 package com.prototype.prototype.activity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.prototype.prototype.Constants;
 import com.prototype.prototype.domain.Wallet;
+import com.prototype.prototype.domain.dto.AdvertDTO;
 
+import org.springframework.http.HttpMethod;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.Web3jFactory;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.response.EthGetBalance;
 import org.web3j.protocol.http.HttpService;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
+import static android.content.Context.MODE_PRIVATE;
 
-public class Utility {
-    public static void displayAlertDialogMessage(Activity activity, String message, DialogInterface.OnClickListener listener){
-        new AlertDialog.Builder(activity)
-                .setMessage(message)
-                .setPositiveButton("OK", listener)
-                .setNegativeButton("Cancel", null)
-                .show();
-    }
+public class Web3Utils {
 
-    public static class GenerateNewWallet extends AsyncTask<String, Void, Wallet> {
+    private static SharedPreferences sPref;
+
+    public static class GenerateNewWallet extends AsyncTask<Object, Void, Wallet> {
 
         @Override
-        protected Wallet doInBackground(String... args) {
+        protected Wallet doInBackground(Object... args) {
+            sPref = (SharedPreferences) args[2];
             Wallet wallet = new Wallet();
             String TAG = "web3";
             Log.d(TAG, "testWeb3: ");
@@ -47,9 +48,9 @@ public class Utility {
                         + web3j.web3ClientVersion().send().getWeb3ClientVersion());
                 Log.d(TAG, "connect");
 //                File key_1 = new File(context[0].getFilesDir().getAbsolutePath());
-                File key_1 = new File(args[0]);
+                File key_1 = new File((String) args[0]);
 
-                String s = org.web3j.crypto.WalletUtils.generateLightNewWalletFile(args[1]
+                String s = org.web3j.crypto.WalletUtils.generateLightNewWalletFile((String) args[1]
                         , key_1);
                 Log.d(TAG, s);
                 String filePath = args[0] + "/" + s;
@@ -60,11 +61,11 @@ public class Utility {
 //        // FIXME: Generate a new wallet file using the web3j command line tools https://docs.web3j.io/command_line.html
                 Credentials credentials =
                         org.web3j.crypto.WalletUtils.loadCredentials(
-                                args[1],
+                                (String) args[1],
                                 fileKey);
                 wallet.setAddress(credentials.getAddress());
                 wallet.setFile(filePath);//TODO переписать на правильный путь
-                wallet.setPassword(args[1]);
+                wallet.setPassword((String) args[1]);
                 wallet.setPublicKey(credentials.getEcKeyPair().getPublicKey());
                 wallet.setPrivateKey(credentials.getEcKeyPair().getPrivateKey());
 
@@ -97,8 +98,60 @@ public class Utility {
 
         @Override
         protected void onPostExecute(Wallet wallet) {
+            Constants.wallet = wallet;
+            SharedPreferences.Editor ed = sPref.edit();
+            ed.putString(Constants.wallet_address, wallet.getAddress());
+            ed.putString(Constants.wallet_password, wallet.getPassword());
+            ed.putString(Constants.wallet_file, wallet.getFile());
+            ed.putString(Constants.wallet_publicKey, wallet.getPublicKey().toString());
+            ed.putString(Constants.wallet_privateKey, wallet.getPrivateKey().toString());
+            ed.commit();
+            new Web3Utils.GetBalanceWallet().execute();
+        }
+    }
+
+    public static class GetBalanceWallet extends AsyncTask<Void, Void, Void> {
 
 
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            Wallet wallet = Constants.wallet;
+            if(wallet!=null){
+
+                String TAG = "web3";
+                // We start by creating a new web3j instance to connect to remote nodes on the network.
+                Web3j web3j = Web3jFactory.build(new HttpService(
+                        "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL"));  // FIXME: Enter your Infura token here;
+                try {
+                    EthGetBalance ethGetBalance = web3j
+                            .ethGetBalance(Constants.wallet.getAddress(), DefaultBlockParameterName.LATEST)
+                            .sendAsync()
+                            .get();
+
+                    Constants.balance = ethGetBalance.getBalance();
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG, "testWeb3: compeleted update balance");
+            }
+
+            return null;
+
+        }
+    }
+
+    public static class GetTestEth extends AsyncTask<Void, Void, Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            RestTemplate template = new RestTemplate();
+            template.exchange(Constants.URL.GET_TEST_ETH, HttpMethod.GET, null, Void.class);
+            return null;
         }
     }
 }

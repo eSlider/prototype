@@ -39,8 +39,8 @@ public class QRGeneratorActivity extends AppCompatActivity {
         initToolbar();
         imageView = (ImageView) findViewById(R.id.image);
         tvAddress = (TextView) findViewById(R.id.tv_address);
-        tvAddress.setText(Constants.address);
-        EditTextValue = Constants.address.trim();
+        tvAddress.setText(Constants.wallet.getAddress());
+        EditTextValue = Constants.wallet.getAddress().trim();
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix = multiFormatWriter.encode(EditTextValue, BarcodeFormat.QR_CODE, 200, 200);

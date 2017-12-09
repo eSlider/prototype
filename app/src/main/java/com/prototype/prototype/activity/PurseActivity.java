@@ -1,6 +1,7 @@
 package com.prototype.prototype.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.prototype.prototype.Constants;
 import com.prototype.prototype.R;
+
+import org.springframework.http.HttpMethod;
+import org.springframework.web.client.RestTemplate;
+import org.w3c.dom.Text;
 
 public class PurseActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_purse;
@@ -17,7 +23,6 @@ public class PurseActivity extends AppCompatActivity {
     private TextView tvBalance;
 
     private Button btnSend, btnReceive, btnChange;
-    private double balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +31,11 @@ public class PurseActivity extends AppCompatActivity {
         setContentView(LAYOUT);
         initToolbar();
         Intent intent = getIntent();
+
+        new Utility.GenerateNewWallet();
+
         tvBalance = (TextView) findViewById(R.id.tv_balance);
-        tvBalance.setText(""+this.balance +" ETH");
+        tvBalance.setText(""+ Constants.balance +" wei");
         btnSend = (Button) findViewById(R.id.btn_send);
         btnReceive = (Button) findViewById(R.id.btn_receive);
         btnChange = (Button) findViewById(R.id.btn_change);
@@ -43,6 +51,7 @@ public class PurseActivity extends AppCompatActivity {
                         switchReceive();
                         break;
                     case R.id.btn_change:
+                        switchChange();
                         break;
                     default:break;
                 }
@@ -52,16 +61,20 @@ public class PurseActivity extends AppCompatActivity {
         btnSend.setOnClickListener(onClickListener);
         btnReceive.setOnClickListener(onClickListener);
         btnChange.setOnClickListener(onClickListener);
+        new UpdateBalanceAsync().execute(tvBalance);
     }
 
     public void switchSend(){
         Intent intent = new Intent(PurseActivity.this, SendActivity.class);
-        intent.putExtra("balance", this.balance);
         startActivity(intent);
     }
 
     public void switchReceive(){
         Intent intent = new Intent(PurseActivity.this, QRGeneratorActivity.class);
+        startActivity(intent);
+    }
+    public void switchChange(){
+        Intent intent = new Intent(PurseActivity.this, ChangeActivity.class);
         startActivity(intent);
     }
 
@@ -91,5 +104,22 @@ public class PurseActivity extends AppCompatActivity {
 //        toolbar.inflateMenu(R.menu.shop_menu);
     }
 
+    public static class UpdateBalanceAsync extends AsyncTask<TextView, Void, Void> {
+        TextView tvBalance;
+        @Override
+        protected Void doInBackground(TextView... textViews) {
+            tvBalance = textViews[0];
+            new Web3Utils.GetBalanceWallet().execute();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(tvBalance!=null){
+                tvBalance.setText(""+ Constants.balance +" wei");
+            }
+        }
+
+    }
 
 }

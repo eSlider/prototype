@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/send_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="10pt"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:text="STUB активити предназначена для покупки/продажи токенов за фиаты или обмена на другие токены. Необходимо реализовать ввод данных (карта, вебмани итд). Пока пополнение по кнопки 0.01 eth"/>
+            <Button
+                android:id="@+id/btn_get_eth"
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:text="Получить 0.01eth"
+                android:paddingRight="50dp"
+                android:paddingLeft="50dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

@@ -14,7 +14,6 @@
     <string name="menu_in_cart">in cart</string>
     <string name="send_title">Send</string>
     <string name="text_your_balance">Your balance</string>
-    <string name="change_title">Change</string>
     <string name="purse_title">Purse</string>
     <string name="favorite_menu">favorite</string>
     <string name="qrcode_menu">scan qrcode</string>
@@ -27,5 +26,6 @@
     <string name="hint_input_name_template">input name template</string>
     <string name="title_your_address">Your address</string>
     <string name="title_qrcode">Your QR CODE</string>
+    <string name="change_title">Change</string>
     <string name="receive_title">Receive</string>
 </resources>

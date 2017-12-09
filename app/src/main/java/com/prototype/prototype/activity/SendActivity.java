@@ -24,7 +24,6 @@ public class SendActivity extends AppCompatActivity {
     private CheckBox cbSaveTemplate;
     private TextView tvNameTemplate, tvBalance;
     public static final int CHOOSE_ADDRESS_FROM_QR = 100;
-    private double balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +37,8 @@ public class SendActivity extends AppCompatActivity {
         etTemplate = (EditText) findViewById(R.id.et_template);
         cbSaveTemplate = (CheckBox) findViewById(R.id.cb_save_template);
         tvNameTemplate = (TextView) findViewById(R.id.tv_name_template);
-        balance = intent.getDoubleExtra("balance", 0d);
         tvBalance = (TextView) findViewById(R.id.tv_balance);
-        tvBalance.setText(getResources().getString(R.string.text_your_balance)+" :"+balance+" ETH");
+        tvBalance.setText(getResources().getString(R.string.text_your_balance)+" :"+Constants.balance+" wei");
 
         cbSaveTemplate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
