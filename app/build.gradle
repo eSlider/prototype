@@ -39,7 +39,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.2'
 //    implementation 'org.web3j:core:3.1.0'
 //    implementation 'org.web3j:core:3.0.1-android'
-    implementation 'org.web3j:core-android:2.2.1'
+    implementation 'org.web3j:core:3.1.1-android'
     implementation 'com.google.zxing:core:3.3.1'
     implementation 'me.dm7.barcodescanner:zxing:1.9'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'

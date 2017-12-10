@@ -28,4 +28,6 @@
     <string name="title_qrcode">Your QR CODE</string>
     <string name="change_title">Change</string>
     <string name="receive_title">Receive</string>
+    <string name="danger_address_recepient_isempty">Address recepient is empty!</string>
+    <string name="danger_not_enough_money">Not enough money</string>
 </resources>

@@ -33,7 +33,7 @@
             android:textStyle="bold"
             android:textSize="15pt"
             android:textColor="@color/blackColor"
-            android:text="0.0 ETH"/>
+            android:text=""/>
         <Button
             android:id="@+id/btn_send"
             android:layout_width="match_parent"

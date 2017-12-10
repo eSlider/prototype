@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +13,17 @@ import android.widget.TextView;
 
 import com.prototype.prototype.Constants;
 import com.prototype.prototype.R;
+import com.prototype.prototype.domain.Wallet;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.Text;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.Web3jFactory;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.response.EthGetBalance;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.utils.Convert;
 
 public class PurseActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_purse;
@@ -32,10 +40,7 @@ public class PurseActivity extends AppCompatActivity {
         initToolbar();
         Intent intent = getIntent();
 
-        new Utility.GenerateNewWallet();
-
         tvBalance = (TextView) findViewById(R.id.tv_balance);
-        tvBalance.setText(""+ Constants.balance +" wei");
         btnSend = (Button) findViewById(R.id.btn_send);
         btnReceive = (Button) findViewById(R.id.btn_receive);
         btnChange = (Button) findViewById(R.id.btn_change);
@@ -62,6 +67,8 @@ public class PurseActivity extends AppCompatActivity {
         btnReceive.setOnClickListener(onClickListener);
         btnChange.setOnClickListener(onClickListener);
         new UpdateBalanceAsync().execute(tvBalance);
+//        updateBalance();
+
     }
 
     public void switchSend(){
@@ -105,20 +112,44 @@ public class PurseActivity extends AppCompatActivity {
     }
 
     public static class UpdateBalanceAsync extends AsyncTask<TextView, Void, Void> {
-        TextView tvBalance;
+        private TextView tvBalance;
         @Override
-        protected Void doInBackground(TextView... textViews) {
-            tvBalance = textViews[0];
-            new Web3Utils.GetBalanceWallet().execute();
+        protected Void doInBackground(TextView... tv) {
+            tvBalance = tv[0];
+            if (Constants.wallet != null) {
+
+                String TAG = "web3";
+                // We start by creating a new web3j instance to connect to remote nodes on the network.
+                Web3j web3j = Web3jFactory.build(new HttpService(
+                        "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL"));  // FIXME: Enter your Infura token here;
+                try {
+                    EthGetBalance ethGetBalance = web3j
+                            .ethGetBalance(Constants.wallet.getAddress(), DefaultBlockParameterName.LATEST)
+                            .sendAsync()
+                            .get();
+
+                    Constants.balance = ethGetBalance.getBalance();
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG, "testWeb3: compeleted update balance");
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             if(tvBalance!=null){
-                tvBalance.setText(""+ Constants.balance +" wei");
+                tvBalance.setText(""+ Convert.fromWei(Constants.balance.toString(), Convert.Unit.ETHER).toPlainString() +" eth");
             }
+            tvBalance = null;
         }
+
+    }
+    public void updateBalance(){
+//        Wallet wallet = Constants.wallet;
 
     }
 

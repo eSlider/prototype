@@ -2,6 +2,7 @@ package com.prototype.prototype.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,10 +13,16 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.prototype.prototype.Constants;
 import com.prototype.prototype.R;
 import com.prototype.prototype.adapter.ShopListAdapter;
+
+import org.web3j.utils.Convert;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class SendActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_send;
@@ -23,6 +30,7 @@ public class SendActivity extends AppCompatActivity {
     private EditText etAddressRecepient, etAmount, etTemplate;
     private CheckBox cbSaveTemplate;
     private TextView tvNameTemplate, tvBalance;
+    private FloatingActionButton fabSend;
     public static final int CHOOSE_ADDRESS_FROM_QR = 100;
 
     @Override
@@ -38,8 +46,10 @@ public class SendActivity extends AppCompatActivity {
         cbSaveTemplate = (CheckBox) findViewById(R.id.cb_save_template);
         tvNameTemplate = (TextView) findViewById(R.id.tv_name_template);
         tvBalance = (TextView) findViewById(R.id.tv_balance);
-        tvBalance.setText(getResources().getString(R.string.text_your_balance)+" :"+Constants.balance+" wei");
+        fabSend = (FloatingActionButton) findViewById(R.id.fab_send);
+        tvBalance.setText(getResources().getString(R.string.text_your_balance)+" :"+Convert.fromWei(Constants.balance.toString(), Convert.Unit.ETHER).toPlainString() +" eth");
 
+        etAddressRecepient.setText("0xE44c4cf797505AF1527B11e4F4c6f95531b4Be24");
         cbSaveTemplate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -54,6 +64,24 @@ public class SendActivity extends AppCompatActivity {
             }
         });
 
+        fabSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(etAddressRecepient.equals("")){
+                    Toast.makeText(SendActivity.this, R.string.danger_address_recepient_isempty, Toast.LENGTH_LONG).show();
+
+                } else if(new BigInteger(Convert.toWei(etAmount.getText().toString(),Convert.Unit.ETHER).toBigInteger().toString()).compareTo(Constants.balance) >= 0 )
+                {
+                    Toast.makeText(SendActivity.this, R.string.danger_not_enough_money, Toast.LENGTH_LONG).show();
+
+                }else
+                {
+//                    BigDecimal amount = Convert.toWei(etAmount.getText(), Convert.Unit.ETHER);
+                    new Web3Utils.Send().execute(etAddressRecepient.getText().toString(), etAmount.getText().toString());
+                }
+            }
+        });
     }
 
     private void initToolbar() {

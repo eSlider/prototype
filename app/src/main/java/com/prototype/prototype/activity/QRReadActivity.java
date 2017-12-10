@@ -35,6 +35,9 @@ public class QRReadActivity extends AppCompatActivity implements ZXingScannerVie
         final Activity activity = this;
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
+        //TODO не работает запрос прав, разобраться!
+        scannerView.setResultHandler(this);
+        scannerView.startCamera();
     }
 
     private boolean checkPermission() {
@@ -76,21 +79,23 @@ public class QRReadActivity extends AppCompatActivity implements ZXingScannerVie
 
     @Override
     public void onResume() {
-        super.onResume();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(checkPermission()){
-                if(scannerView==null){
-                    scannerView = new ZXingScannerView(this);
-                    setContentView(scannerView);
-                }
-                scannerView.setResultHandler(this);
+        scannerView.setResultHandler(this);
                 scannerView.startCamera();
-            }
-            else
-            {
-                requestPermission();
-            }
-        }
+        super.onResume();
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+//            if(checkPermission()){
+//                if(scannerView==null){
+//                    scannerView = new ZXingScannerView(this);
+//                    setContentView(scannerView);
+//                }
+//                scannerView.setResultHandler(this);
+//                scannerView.startCamera();
+//            }
+//            else
+//            {
+//                requestPermission();
+//            }
+//        }
     }
 
     @Override

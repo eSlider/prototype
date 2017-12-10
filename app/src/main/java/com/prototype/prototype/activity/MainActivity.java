@@ -1,9 +1,12 @@
 package com.prototype.prototype.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -13,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -22,11 +26,13 @@ import com.prototype.prototype.adapter.TabsFragmentAdapter;
 import com.prototype.prototype.domain.Advert;
 import com.prototype.prototype.domain.Wallet;
 import com.prototype.prototype.domain.dto.AdvertDTO;
+import com.prototype.prototype.service.MainService;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigInteger;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private TabsFragmentAdapter adapter;
     private FloatingActionButton fab;
     public SharedPreferences sPref;
+    public Handler h;
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -55,7 +63,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         initWallet();
+//        new Utility.UpdateStatus().execute(MainActivity.this);
+        startService(new Intent(this, MainService.class));
 
+//        h = new Handler() {
+//            public void handleMessage(android.os.Message msg) {
+//                Log.d("HANDLE", ""+ msg.getData().getInt("test"));
+//            };
+//        };
+//
+//        Thread t = new Thread(new Runnable() {
+//            public void run() {
+//                try {
+//                    // устанавливаем подключение
+//                    int k = 0;
+//                    while (true) {
+//                        TimeUnit.SECONDS.sleep(5);
+//                        Message message = new Message();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putInt("test", ++k);
+//                        message.setData(bundle);
+//                        h.sendMessage(message);
+//                    }
+//
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        t.start();
+
+//        new Web3Utils.GetAllTransactions().execute("");
     }
 
     private void initWallet() {

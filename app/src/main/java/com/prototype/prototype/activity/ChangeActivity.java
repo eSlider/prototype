@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.prototype.prototype.Constants;
 import com.prototype.prototype.R;
@@ -15,6 +16,7 @@ public class ChangeActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_change;
     private Button btnGetEth;
     private Toolbar toolbar;
+    private TextView tvChangeAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +25,14 @@ public class ChangeActivity extends AppCompatActivity {
         setContentView(LAYOUT);
 //        Intent intent = getIntent();
         initToolbar();
+        tvChangeAddress = (TextView) findViewById(R.id.tv_change_address);
+        tvChangeAddress.setText(Constants.wallet.getAddress());
         btnGetEth = (Button) findViewById(R.id.btn_get_eth);
         //ограничиваем получаему сумму с крана не меньше баланса
         if(Constants.balance.equals(new BigInteger("0"))){
             btnGetEth.setEnabled(true);
         }else {
-            btnGetEth.setEnabled(false);
+            btnGetEth.setEnabled(true);
         }
         btnGetEth.setOnClickListener(new View.OnClickListener() {
             @Override

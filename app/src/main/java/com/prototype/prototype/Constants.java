@@ -12,7 +12,7 @@ public class Constants {
     public static AdvertDTO advertDTO;
     public static int CART_COUNT = 0;
     public static Wallet wallet;
-    public static BigInteger balance;
+    public static BigInteger balance = new BigInteger("0");
 
     //saving preferences
     public static final String wallet_address = "wallet_address";
@@ -26,6 +26,9 @@ public class Constants {
         public static String HOST = "http://192.168.0.101"+PORT+"/";
         public static String FIND_ALL_ADVERT = HOST+"findalladvert";
         public static String GET_TEST_ETH = HOST+"gettesteth/"+wallet.getAddress();
+        public static String GET_STATUS = HOST+"getstatus/"+wallet.getAddress();
+        public static String SAVE_TRANSACTION = HOST+"savetransaction/";
+
     }
 
 }
