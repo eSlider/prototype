@@ -19,11 +19,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import com.prototype.prototype.Constants;
 import com.prototype.prototype.R;
+import com.prototype.prototype.adapter.HistoryAdapter;
 import com.prototype.prototype.adapter.TabsFragmentAdapter;
 import com.prototype.prototype.domain.Advert;
+import com.prototype.prototype.domain.Transaction;
 import com.prototype.prototype.domain.Wallet;
 import com.prototype.prototype.domain.dto.AdvertDTO;
 import com.prototype.prototype.service.MainService;
@@ -32,6 +35,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     public SharedPreferences sPref;
     public Handler h;
+
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -117,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
+
+
 
 //        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 //            @Override

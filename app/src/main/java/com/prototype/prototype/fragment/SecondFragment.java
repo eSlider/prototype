@@ -22,7 +22,7 @@ public class SecondFragment extends AbstractTabFragment {
         SecondFragment fragment = new SecondFragment();
         fragment.setArguments(args);
         fragment.setContext(context);
-        fragment.setTitle(context.getString(R.string.tab_2));
+        fragment.setTitle(context.getString(R.string.map_tab));
         return fragment;
     }
 

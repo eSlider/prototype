@@ -28,6 +28,7 @@ public class Constants {
         public static String GET_TEST_ETH = HOST+"gettesteth/"+wallet.getAddress();
         public static String GET_STATUS = HOST+"getstatus/"+wallet.getAddress();
         public static String SAVE_TRANSACTION = HOST+"savetransaction/";
+        public static String TRANSACTION_VIEWER = "https://rinkeby.etherscan.io/tx/";
 
     }
 

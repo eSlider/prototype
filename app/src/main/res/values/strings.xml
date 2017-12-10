@@ -6,8 +6,8 @@
     <string name="view_nav_close">Close</string>
 
     <string name="advert_tab">Adverts</string>
-    <string name="tab_2">Tab 2</string>
-    <string name="tab_3">Tab 3</string>
+    <string name="map_tab">Map</string>
+    <string name="history_tab">History</string>
     <string name="tab_4">Tab 4</string>
     <string name="btn_buy">buy</string>
     <string name="cart_title">Cart :</string>
@@ -30,4 +30,5 @@
     <string name="receive_title">Receive</string>
     <string name="danger_address_recepient_isempty">Address recepient is empty!</string>
     <string name="danger_not_enough_money">Not enough money</string>
+    <string name="empty_list">Empty list</string>
 </resources>
