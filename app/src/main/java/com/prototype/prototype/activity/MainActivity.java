@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,27 +15,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 
 import com.prototype.prototype.Constants;
 import com.prototype.prototype.R;
-import com.prototype.prototype.adapter.HistoryAdapter;
 import com.prototype.prototype.adapter.TabsFragmentAdapter;
 import com.prototype.prototype.domain.Advert;
-import com.prototype.prototype.domain.Transaction;
 import com.prototype.prototype.domain.Wallet;
 import com.prototype.prototype.domain.dto.AdvertDTO;
+import com.prototype.prototype.domain.dto.TransactionDTO;
 import com.prototype.prototype.service.MainService;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         initWallet();
 //        new Utility.UpdateStatus().execute(MainActivity.this);
         startService(new Intent(this, MainService.class));
-
+//        new HistoryTask().execute();
 //        h = new Handler() {
 //            public void handleMessage(android.os.Message msg) {
 //                Log.d("HANDLE", ""+ msg.getData().getInt("test"));
@@ -87,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 //                        Message message = new Message();
 //                        Bundle bundle = new Bundle();
 //                        bundle.putInt("test", ++k);
-//                        message.setData(bundle);
+//                        message.setAdvertData(bundle);
 //                        h.sendMessage(message);
 //                    }
 //
@@ -125,32 +119,33 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-////                Toast.makeText(MainActivity.this, "scroll pos "+position+" offset "+ positionOffset+ " offsetPixel "+ positionOffsetPixels, Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-////                switch (position){
-////                    case 0:
-////                        adapter.getAdvertFragment().getAdvertListAdapter().notifyDataSetChanged();
-////
-////                    case 1:
-////                        break;
-////                    case 2:
-////                        break;
-////                    default:
-////                        break;
-////                }
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-////                Toast.makeText(MainActivity.this,"state " +state, Toast.LENGTH_LONG).show();
-//            }
-//        });
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                Toast.makeText(MainActivity.this, "scroll pos "+position+" offset "+ positionOffset+ " offsetPixel "+ positionOffsetPixels, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+//                        adapter.getAdvertFragment().getAdvertListAdapter().notifyDataSetChanged();
+
+                    case 1:
+                        break;
+                    case 2:
+                        new HistoryTask().execute();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+//                Toast.makeText(MainActivity.this,"state " +state, Toast.LENGTH_LONG).show();
+            }
+        });
         new AdvertTask().execute(); // делаем асинхрон запрос к рест серверу со списком всех объявлений
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -226,10 +221,26 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(AdvertDTO advertDTO) {
-            adapter.setData(advertDTO);
+            adapter.setAdvertData(advertDTO);
         }
     }
 
+    private class HistoryTask extends AsyncTask<Void, Void, TransactionDTO> {
+
+        @Override
+        protected TransactionDTO doInBackground(Void... params) {
+            RestTemplate template = new RestTemplate();
+            template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            return template.getForObject(Constants.URL.FIND_ALL_TRANSACTION, TransactionDTO.class);
+        }
+
+        @Override
+        protected void onPostExecute(TransactionDTO transactionDTO) {
+            Constants.transactionDTO = transactionDTO;
+//            adapter.setTransactionData(transactionDTO);
+            adapter.getHistoryFragment().refreshList(transactionDTO);
+        }
+    }
 //    public void testWeb3() throws Exception {
 //        int SDK_INT = android.os.Build.VERSION.SDK_INT;
 //        if (SDK_INT > 8) {

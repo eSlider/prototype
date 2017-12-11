@@ -7,6 +7,9 @@
     <color name="whiteColor">#ffffff</color>
     <color name="blackColor">#000000</color>
 
+    <color name="minus">#f9dcdc</color>
+
+    <color name="plus">#c6d3fc</color>
     <color name="QRCodeWhiteColor">#ffffff</color>
     <color name="QRCodeBlackColor">#000000</color>
 </resources>

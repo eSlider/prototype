@@ -9,19 +9,27 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.prototype.prototype.Constants;
 import com.prototype.prototype.R;
 import com.prototype.prototype.domain.Transaction;
+import com.prototype.prototype.domain.dto.TransactionDTO;
 
+import org.web3j.utils.Convert;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryAdapter extends ArrayAdapter<Transaction>{
 
-    private List<Transaction> list;
+    private TransactionDTO transactionDTO = new TransactionDTO();
 
-
-    public HistoryAdapter(Context context, List<Transaction> list, boolean isPicker) {
+    public HistoryAdapter(Context context, List<Transaction> list) {
         super(context, R.layout.history_item, R.id.tv_address, list);
-        this.list = list;
+        this.transactionDTO.setData(list);
+    }
+
+    public void setData(TransactionDTO transactionDTO) {
+        this.transactionDTO = transactionDTO;
     }
 
     @NonNull
@@ -43,7 +51,7 @@ public class HistoryAdapter extends ArrayAdapter<Transaction>{
 
         ViewHolder holder = (ViewHolder) convertView.getTag();
 
-        Transaction transaction = list.get(position);
+        Transaction transaction = transactionDTO.getData().get(position);
 
 //        if(isPicker){
 ////            if(list.contains(sprElement)){
@@ -52,14 +60,17 @@ public class HistoryAdapter extends ArrayAdapter<Transaction>{
 //
 ////         }
 //        }
-        if(transaction.getFromAddress().equals("0x0")) {
-            convertView.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
+
+        if(transaction.getFromAddress().equals(Constants.wallet.getAddress())) {
+            convertView.setBackgroundColor(getContext().getResources().getColor(R.color.plus));
+            holder.tvAddress.setText(transaction.getToAddress());
         }else {
-            convertView.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
+            convertView.setBackgroundColor(getContext().getResources().getColor(R.color.minus));
+            holder.tvAddress.setText(transaction.getFromAddress());
         }
-        holder.tvAddress.setText(transaction.getFromAddress());
-        holder.tvAmount.setText(transaction.getValue());
-        holder.tvDate.setText(String.valueOf(transaction.getBlockNumber()));
+
+        holder.tvAmount.setText(Convert.fromWei(transaction.getValue(), Convert.Unit.ETHER).toPlainString());
+        holder.tvDate.setText(String.valueOf(transaction.getDateTx()));
 
 //            if(!sprElement.isRemove()){
 //                holder.imageView.setImageResource(R.drawable.element);

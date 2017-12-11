@@ -2,6 +2,7 @@ package com.prototype.prototype.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import org.web3j.utils.Convert;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.concurrent.TimeUnit;
 
 public class SendActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_send;
@@ -38,6 +41,7 @@ public class SendActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
+
         Intent intent = getIntent();
         initToolbar();
         etAddressRecepient = (EditText) findViewById(R.id.et_address_recepient);
@@ -79,9 +83,17 @@ public class SendActivity extends AppCompatActivity {
                 {
 //                    BigDecimal amount = Convert.toWei(etAmount.getText(), Convert.Unit.ETHER);
                     new Web3Utils.Send().execute(etAddressRecepient.getText().toString(), etAmount.getText().toString());
+
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    finish();
                 }
             }
         });
+
     }
 
     private void initToolbar() {

@@ -14,16 +14,20 @@
     <RelativeLayout
         android:id="@+id/rl_emptyView"
         android:layout_width="match_parent"
-        android:layout_height="150dp" >
+        android:layout_height="match_parent"
+        android:gravity="center">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center_horizontal"
-            android:paddingTop="50dp"
-            android:text="@string/empty_list"
-            android:textColor="@color/blackColor"
-            android:textSize="20sp" />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:foregroundGravity="center"
+            android:layout_centerVertical="true"
+            android:maxHeight="100dip"
+            android:minHeight="50dip"
+
+            android:minWidth="50dip"
+            android:maxWidth="100dip"/>
 
 
     </RelativeLayout>

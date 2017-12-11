@@ -6,15 +6,11 @@ public class Transaction {
 
     private long id;
 
-    private long nonce;
-    private long blockNumber;
-    private long transactionIndex;
     private String toAddress;
     private String fromAddress;
     private String value;
-    private long gasPrice;
-    private long gas;
     private String hashTx;
+    private String dateTx;
 
     public Transaction() {
     }
@@ -25,30 +21,6 @@ public class Transaction {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getNonce() {
-        return nonce;
-    }
-
-    public void setNonce(long nonce) {
-        this.nonce = nonce;
-    }
-
-    public long getBlockNumber() {
-        return blockNumber;
-    }
-
-    public void setBlockNumber(long blockNumber) {
-        this.blockNumber = blockNumber;
-    }
-
-    public long getTransactionIndex() {
-        return transactionIndex;
-    }
-
-    public void setTransactionIndex(long transactionIndex) {
-        this.transactionIndex = transactionIndex;
     }
 
     public String getToAddress() {
@@ -75,27 +47,19 @@ public class Transaction {
         this.value = value;
     }
 
-    public long getGasPrice() {
-        return gasPrice;
-    }
-
-    public void setGasPrice(long gasPrice) {
-        this.gasPrice = gasPrice;
-    }
-
-    public long getGas() {
-        return gas;
-    }
-
-    public void setGas(long gas) {
-        this.gas = gas;
-    }
-
     public String getHashTx() {
         return hashTx;
     }
 
     public void setHashTx(String hashTx) {
         this.hashTx = hashTx;
+    }
+
+    public String getDateTx() {
+        return dateTx;
+    }
+
+    public void setDateTx(String dateTx) {
+        this.dateTx = dateTx;
     }
 }

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.prototype.prototype.Constants;
 import com.prototype.prototype.domain.dto.AdvertDTO;
+import com.prototype.prototype.domain.dto.TransactionDTO;
 import com.prototype.prototype.fragment.AbstractTabFragment;
 import com.prototype.prototype.fragment.AdvertFragment;
 import com.prototype.prototype.fragment.SecondFragment;
@@ -40,9 +41,14 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
 //        tabs.put(3, FourthFragment.getInstance(context));
     }
 
-    public void setData(AdvertDTO data) {
+    public void setAdvertData(AdvertDTO data) {
         Constants.advertDTO = data;
         advertFragment.refreshList(data);
+    }
+
+    public void setTransactionData(TransactionDTO data){
+        Constants.transactionDTO = data;
+        historyFragment.refreshList(data);
     }
 
     @Override

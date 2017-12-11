@@ -190,8 +190,6 @@ public class Web3Utils {
 
                 RestTemplate template = new RestTemplate();
                 template.exchange(Constants.URL.SAVE_TRANSACTION
-                        +transferReceipt.getBlockNumber()+"/"
-                        +transferReceipt.getBlockNumber()+"/"
                         +transferReceipt.getFrom()+"/"
                         +transferReceipt.getTo()+"/"
                         +amount+"/"
@@ -217,20 +215,6 @@ public class Web3Utils {
                         "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL"));  // FIXME: Enter your Infura token here;
                 EthGetTransactionCount send = web3j.ethGetTransactionCount(Constants.wallet.getAddress(), DefaultBlockParameterName.LATEST).send();
                 System.out.println(send.getTransactionCount());
-//                Credentials credentials =
-//                        WalletUtils.loadCredentials(
-//                                Constants.wallet.getPassword(),
-//                                new File(Constants.wallet.getFile()));//TODO заменить на внутренний файл-ключ
-//                BigDecimal amount = Convert.toWei(args[1], Convert.Unit.ETHER);
-//                System.out.println("Sending "+args[1]+" ("
-//                        + Convert.fromWei(args[1], Convert.Unit.ETHER).toPlainString() + " wei)");
-//                TransactionReceipt transferReceipt = Transfer.sendFunds(
-//                        web3j, credentials,
-//                        args[0],  // you can put any address here
-//                        amount, Convert.Unit.WEI) // 1 wei = 10^-18 Ether
-//                        .send();
-//                System.out.println("Transaction complete, view it at https://rinkeby.etherscan.io/tx/"
-//                        + transferReceipt.getTransactionHash());
 
             } catch (Exception e) {
                 e.printStackTrace();
