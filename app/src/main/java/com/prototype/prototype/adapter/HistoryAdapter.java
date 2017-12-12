@@ -16,10 +16,9 @@ import com.prototype.prototype.domain.dto.TransactionDTO;
 
 import org.web3j.utils.Convert;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryAdapter extends ArrayAdapter<Transaction>{
+public class HistoryAdapter extends ArrayAdapter<Transaction> {
 
     private TransactionDTO transactionDTO = new TransactionDTO();
 
@@ -35,7 +34,7 @@ public class HistoryAdapter extends ArrayAdapter<Transaction>{
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if(convertView == null){
+        if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.history_item, parent, false);
@@ -61,15 +60,15 @@ public class HistoryAdapter extends ArrayAdapter<Transaction>{
 ////         }
 //        }
 
-        if(transaction.getFromAddress().equals(Constants.wallet.getAddress())) {
+        if (transaction.getFromAddress().equals(Constants.wallet.getAddress())) {
             convertView.setBackgroundColor(getContext().getResources().getColor(R.color.plus));
-            holder.tvAddress.setText(transaction.getToAddress());
-        }else {
+            holder.tvAddress.setText("from " + transaction.getToAddress());
+        } else {
             convertView.setBackgroundColor(getContext().getResources().getColor(R.color.minus));
-            holder.tvAddress.setText(transaction.getFromAddress());
+            holder.tvAddress.setText("to " + transaction.getFromAddress());
         }
 
-        holder.tvAmount.setText(Convert.fromWei(transaction.getValue(), Convert.Unit.ETHER).toPlainString());
+        holder.tvAmount.setText(Convert.fromWei(transaction.getValue(), Convert.Unit.ETHER).toPlainString() + " eth");
         holder.tvDate.setText(String.valueOf(transaction.getDateTx()));
 
 //            if(!sprElement.isRemove()){
@@ -85,7 +84,6 @@ public class HistoryAdapter extends ArrayAdapter<Transaction>{
         public TextView tvAmount;
         public TextView tvDate;
         public TextView tvAddress;
-
 
 
     }

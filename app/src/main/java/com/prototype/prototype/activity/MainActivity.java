@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
 
-
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -127,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
 //                        adapter.getAdvertFragment().getAdvertListAdapter().notifyDataSetChanged();
 
@@ -156,13 +155,22 @@ public class MainActivity extends AppCompatActivity {
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
+
+        toolbar.inflateMenu(R.menu.menu);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.search:
+//                        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+//                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
                 return false;
             }
         });
-        toolbar.inflateMenu(R.menu.menu);
     }
 
     private void initNavigationView() {
@@ -241,59 +249,6 @@ public class MainActivity extends AppCompatActivity {
             adapter.getHistoryFragment().refreshList(transactionDTO);
         }
     }
-//    public void testWeb3() throws Exception {
-//        int SDK_INT = android.os.Build.VERSION.SDK_INT;
-//        if (SDK_INT > 8) {
-//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-//                    .permitAll().build();
-//            StrictMode.setThreadPolicy(policy);
-//            //your codes here
-//
-//
-//            String TAG = "web3";
-//            Log.d(TAG, "testWeb3: ");
-//            // We start by creating a new web3j instance to connect to remote nodes on the network.
-//            Web3j web3j = Web3jFactory.build(new HttpService(
-//                    "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL"));  // FIXME: Enter your Infura token here;
-//            Log.d(TAG, "Connected to Ethereum client version: "
-//                    + web3j.web3ClientVersion().send().getWeb3ClientVersion());
-//            Log.d(TAG, "connect");
-//            File key_1 = new File(getApplicationContext().getFilesDir().getAbsolutePath());
-//
-//            String s = WalletUtils.generateLightNewWalletFile("123123123"
-//                    , key_1);
-//            Log.d(TAG, s);
-//            String filePath = getApplicationContext().getFilesDir() + "/" + s;
-////
-//            File fileKey = new File(filePath);
-//            Log.d(TAG,fileKey.getAbsolutePath());
-////        // We then need to load our Ethereum wallet file
-////        // FIXME: Generate a new wallet file using the web3j command line tools https://docs.web3j.io/command_line.html
-//        Credentials credentials =
-//                WalletUtils.loadCredentials(
-//                        "123123123",
-//                        fileKey);
-//        Log.d(TAG,"Credentials loaded");
-//            Log.d(TAG,credentials.getAddress());
-//            Log.d(TAG,"----------------");
-//            Log.d(TAG, credentials.getEcKeyPair().getPublicKey().toString());
-//            Log.d(TAG, credentials.getEcKeyPair().getPrivateKey().toString());
-//            Log.d(TAG, credentials.getEcKeyPair().toString());
-////        // FIXME: Request some Ether for the Rinkeby test network at https://www.rinkeby.io/#faucet
-//////        log.info("Sending 1 Wei ("
-//////                + Convert.fromWei("1", Convert.Unit.ETHER).toPlainString() + " Ether)");
-////        Log.d(TAG,"Sending 1 Eth ("
-////                + Convert.fromWei("1", Convert.Unit.ETHER).toPlainString() + " Ether)");
-////        TransactionReceipt transferReceipt = Transfer.sendFunds(
-////                web3j, credentials,
-////                "0x3596ddf5181c9F6Aa1bcE87D967Bf227DDE70ddf",  // you can put any address here
-////                BigDecimal.ONE, Convert.Unit.ETHER)  // 1 wei = 10^-18 Ether
-////                .send();
-////        Log.d(TAG,"Transaction complete, view it at https://rinkeby.etherscan.io/tx/"
-////                + transferReceipt.getTransactionHash());
-//        }
-//
-//    }
 
 
 }

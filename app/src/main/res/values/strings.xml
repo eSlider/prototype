@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">prototype</string>
+    <string name="adverts_title">adverts</string>
+    <string name="settings_title">settings</string>
+    <string name="profile_title">profile</string>
     <string name="search_title">search</string>
-    <string name="settings_title">настройки</string>
     <string name="view_nav_open">Open</string>
     <string name="view_nav_close">Close</string>
 
@@ -12,7 +14,7 @@
     <string name="btn_buy">buy</string>
     <string name="cart_title">Cart :</string>
     <string name="menu_in_cart">in cart</string>
-    <string name="send_title">Send</string>
+    <string name="send_title">send</string>
     <string name="text_your_balance">Your balance</string>
     <string name="purse_title">Purse</string>
     <string name="favorite_menu">favorite</string>

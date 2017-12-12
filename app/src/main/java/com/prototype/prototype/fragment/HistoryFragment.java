@@ -68,7 +68,7 @@ public class HistoryFragment extends AbstractTabFragment {
         lvHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String address = Constants.transactionDTO.getData().get(i).getFromAddress();
+                String address = Constants.transactionDTO.getData().get(i).getHashTx();
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.URL.TRANSACTION_VIEWER + address));
                 startActivity(intent);
             }
