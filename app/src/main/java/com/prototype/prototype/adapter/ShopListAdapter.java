@@ -11,14 +11,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.prototype.prototype.Constants;
 import com.prototype.prototype.R;
 import com.prototype.prototype.activity.MainActivity;
 import com.prototype.prototype.domain.Advert;
+import com.prototype.prototype.domain.Item;
 import com.prototype.prototype.domain.dto.AdvertDTO;
+import com.prototype.prototype.domain.dto.ItemDTO;
+
+import org.web3j.utils.Convert;
 
 public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ShopViewHolder> {
 
-    private AdvertDTO advertDTO = new AdvertDTO();
+    private ItemDTO itemDTO = new ItemDTO();
     private Context context;
 
     public ShopListAdapter() {
@@ -28,39 +33,38 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ShopVi
     public ShopViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shop_item, parent, false);
         context = parent.getContext();
+        itemDTO = Constants.itemDTO;
         return new ShopViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ShopViewHolder holder, final int position) {
-        final Advert advert = advertDTO.getData().get(position);
-        holder.title.setText(advert.getTitle());
-        holder.description.setText(advert.getDescription());
-        byte[] pic = advert.getPic();
-        Bitmap bMap = BitmapFactory.decodeByteArray(pic, 0, pic.length);
-        holder.pic.setImageBitmap(bMap);
+        final Item item = itemDTO.getData().get(position);
+        holder.title.setText(item.getTitle());
+        holder.description.setText(Convert.fromWei(Long.toString(item.getPrice()), Convert.Unit.ETHER).toPlainString() + " eth");
+//        byte[] pic = item.getPic();
+//        Bitmap bMap = BitmapFactory.decodeByteArray(pic, 0, pic.length);
+//        holder.pic.setImageBitmap(bMap);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (context == null)
-//                    return;
-//                if (context instanceof MainActivity) {
-//                    MainActivity mainActivity = (MainActivity) context;
-//
-//                    mainActivity.switchContent(advert);
-//                }
+                Item item = itemDTO.getData().get(position);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return advertDTO.getData().size();
+        if(itemDTO == null){
+            return Constants.itemDTO.getData().size();
+        }
+        return itemDTO.getData().size();
     }
 
-    public void setData(AdvertDTO advertDTO) {
-        this.advertDTO = advertDTO;
+    public void setData(ItemDTO itemDTO) {
+
+        this.itemDTO = itemDTO;
     }
 
     public static class ShopViewHolder extends RecyclerView.ViewHolder {
@@ -68,14 +72,14 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ShopVi
         CardView cardView;
         TextView title;
         TextView description;
-        ImageView pic;
+//        ImageView pic;
 
         public ShopViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.shop_card_view);
             title = (TextView) itemView.findViewById(R.id.shop_tv_title);
             description = (TextView) itemView.findViewById(R.id.shop_tv_description);
-            pic = (ImageView) itemView.findViewById(R.id.shop_iv_pic);
+//            pic = (ImageView) itemView.findViewById(R.id.shop_iv_pic);
         }
     }
 }

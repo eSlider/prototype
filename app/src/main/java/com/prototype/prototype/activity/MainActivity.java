@@ -22,8 +22,10 @@ import com.prototype.prototype.Constants;
 import com.prototype.prototype.R;
 import com.prototype.prototype.adapter.TabsFragmentAdapter;
 import com.prototype.prototype.domain.Advert;
+import com.prototype.prototype.domain.Item;
 import com.prototype.prototype.domain.Wallet;
 import com.prototype.prototype.domain.dto.AdvertDTO;
+import com.prototype.prototype.domain.dto.ItemDTO;
 import com.prototype.prototype.domain.dto.TransactionDTO;
 import com.prototype.prototype.service.MainService;
 
@@ -31,6 +33,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigInteger;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -213,9 +216,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void switchContent(Advert advert) {
         Intent intent = new Intent(MainActivity.this, ShopActivity.class);
-        intent.putExtra("id", advert.getId());
-        intent.putExtra("title", advert.getTitle());
-        startActivity(intent);
+//        RestTemplate template = new RestTemplate();
+//        template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+//        Constants.itemDTO = template.getForObject(Constants.URL.FIND_ALL_ITEM+"/"+advert.getId(), ItemDTO.class);
+        new ShopTask().execute(advert);
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (Constants.itemDTO != null) {
+            startActivity(intent);
+        }
     }
 
     private class AdvertTask extends AsyncTask<Void, Void, AdvertDTO> {
@@ -251,4 +263,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private class ShopTask extends AsyncTask<Advert, Void, ItemDTO> {
+
+        @Override
+        protected ItemDTO doInBackground(Advert... args) {
+            RestTemplate template = new RestTemplate();
+            template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            return template.getForObject(Constants.URL.FIND_ALL_ITEM + "/" + args[0].getId(), ItemDTO.class);
+        }
+
+        @Override
+        protected void onPostExecute(ItemDTO itemDTO) {
+            Constants.itemDTO = itemDTO;
+//            Constants.itemDTO = itemDTO;
+//            adapter.setTransactionData(transactionDTO);
+//            adapter.getHistoryFragment().refreshList(itemDTO);
+        }
+    }
 }

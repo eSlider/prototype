@@ -17,13 +17,16 @@ import com.prototype.prototype.R;
 import com.prototype.prototype.adapter.AdvertListAdapter;
 import com.prototype.prototype.adapter.ShopListAdapter;
 import com.prototype.prototype.adapter.TabsFragmentAdapter;
+import com.prototype.prototype.domain.Item;
+
+import java.util.List;
 
 public class ShopActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.activity_shop;
     public TextView tvId;
     public TextView tvTitle;
     public TextView tvShopCart;
-
+    public long totalPrice = 0;
     private Toolbar toolbar;
     private ShopListAdapter shopListAdapter  = new ShopListAdapter();
 
@@ -33,20 +36,22 @@ public class ShopActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
         Intent intent = getIntent();
-        shopListAdapter.setData(Constants.advertDTO);
+        shopListAdapter.setData(Constants.itemDTO);
         initToolbar();
         RecyclerView rv = (RecyclerView) findViewById(R.id.shop_recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(shopListAdapter);
+
 
 //        tvId.setText(String.valueOf(intent.getIntExtra("id", 0)));
 //        tvTitle.setText(intent.getStringExtra("title"));
     }
 
     private void initToolbar() {
-        tvShopCart = (TextView) findViewById(R.id.tv_shop_cart);
+//        tvShopCart = (TextView) findViewById(R.id.tv_shop_cart);
         toolbar = (Toolbar) findViewById(R.id.shop_toolbar);
-        tvShopCart.setText(R.string.cart_title+Constants.CART_COUNT);
+        toolbar.setTitle("Cart");
+//        tvShopCart.setText(R.string.cart_title+Constants.CART_COUNT);
 
 //        toolbar.setBackgroundColor(getResources().getColor(R.color.whiteColor));
         toolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.ic_arrow_left_thick));
@@ -60,15 +65,17 @@ public class ShopActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                tvShopCart.setText(getResources().getString(R.string.cart_title)+" "+String.valueOf(++Constants.CART_COUNT));
-//                tvShopCart.setText(R.string.cart_title+(++Constants.CART_COUNT));
-                return false;
-            }
-        });
-        toolbar.inflateMenu(R.menu.shop_menu);
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                List<Item> data = Constants.itemDTO.getData();
+//                long price = data.get(item.getItemId()).getPrice();
+//                tvShopCart.setText(getResources().getString(R.string.cart_title)+" "+(totalPrice+=price));
+////                tvShopCart.setText(R.string.cart_title+(++Constants.CART_COUNT));
+//                return false;
+//            }
+//        });
+//        toolbar.inflateMenu(R.menu.shop_menu);
     }
 
 
