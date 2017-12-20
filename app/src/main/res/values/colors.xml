@@ -6,9 +6,10 @@
     <color name="mainBackground">#e2e2e2</color>
     <color name="whiteColor">#ffffff</color>
     <color name="blackColor">#000000</color>
-
+    <color name="passwordAccess">#6ad977</color>
+    <color name="passwordDenied">#ba5454</color>
     <color name="minus">#f9dcdc</color>
-
+    <color name="gray_880b1f35">#880b1f35</color>
     <color name="plus">#c6d3fc</color>
     <color name="QRCodeWhiteColor">#ffffff</color>
     <color name="QRCodeBlackColor">#000000</color>

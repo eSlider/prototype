@@ -6,7 +6,7 @@
     <string name="search_title">search</string>
     <string name="view_nav_open">Open</string>
     <string name="view_nav_close">Close</string>
-
+    <string name="loading">Loading…</string>
     <string name="advert_tab">Adverts</string>
     <string name="map_tab">Map</string>
     <string name="history_tab">History</string>
@@ -17,6 +17,7 @@
     <string name="send_title">send</string>
     <string name="text_your_balance">Your balance</string>
     <string name="purse_title">Purse</string>
+    <string name="setting_title">Settings</string>
     <string name="favorite_menu">favorite</string>
     <string name="qrcode_menu">scan qrcode</string>
     <string name="address_title">Address</string>
@@ -33,4 +34,7 @@
     <string name="danger_address_recepient_isempty">Address recepient is empty!</string>
     <string name="danger_not_enough_money">Not enough money</string>
     <string name="empty_list">Empty list</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

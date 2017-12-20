@@ -106,6 +106,7 @@ public class Web3Utils {
 
         @Override
         protected void onPostExecute(Wallet wallet) {
+//            super.onPostExecute(wallet);
             Constants.wallet = wallet;
             SharedPreferences.Editor ed = sPref.edit();
             ed.putString(Constants.wallet_address, wallet.getAddress());
@@ -114,7 +115,7 @@ public class Web3Utils {
             ed.putString(Constants.wallet_publicKey, wallet.getPublicKey().toString());
             ed.putString(Constants.wallet_privateKey, wallet.getPrivateKey().toString());
             ed.commit();
-            new Web3Utils.GetBalanceWallet().execute();
+
         }
     }
 

@@ -16,7 +16,7 @@ import com.prototype.prototype.domain.dto.AdvertDTO;
 public class AdvertFragment extends AbstractTabFragment {
 
     public static final int FRAGMENT = R.layout.fragment_adverts;
-    private AdvertListAdapter advertListAdapter  = new AdvertListAdapter();
+    private AdvertListAdapter advertListAdapter;
 
     public AdvertFragment() {
     }
@@ -26,7 +26,7 @@ public class AdvertFragment extends AbstractTabFragment {
     }
 
     public void refreshList(AdvertDTO advertDTO){
-        this.advertListAdapter.setData(advertDTO);
+//        this.advertListAdapter.setData(advertDTO);
         this.advertListAdapter.notifyDataSetChanged();
     }
 

@@ -3,12 +3,15 @@
     <!-- Base application theme. -->
     <style name="AppTheme.Default" parent="AppTheme">
         <!-- Customize your theme here. -->
+        <item name="pinViewStyle">@style/PinWidget.PinView</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/whiteColor</item>
-
-
     </style>
 
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_layout_background</item>
+        <item name="android:textColor">#fafafa</item>
+    </style>
 </resources>

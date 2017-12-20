@@ -27,9 +27,13 @@ public class Constants {
     public static final String wallet_publicKey = "wallet_publicKey";
     public static final String wallet_privateKey = "wallet_privateKey";
 
+    //saving settings preferences
+    public static final String settings_show_splash = "settings_show_splash";
+
+
     public static class URL {
         public static String PORT = "";
-        public static String HOST = "http://95.85.8.20"+PORT+"/";
+        public static String HOST = "http://192.168.0.101:8080"+PORT+"/";
         public static String FIND_ALL_ADVERT = HOST+"findalladvert";
         public static String FIND_ALL_ITEM = HOST+"findallitembyid";
         public static String GET_TEST_ETH = HOST+"gettesteth/"+wallet.getAddress();

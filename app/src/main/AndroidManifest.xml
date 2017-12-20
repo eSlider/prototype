@@ -23,13 +23,16 @@
         <activity android:name=".activity.PurseActivity"/>
         <activity android:name=".activity.SendActivity"/>
         <activity android:name=".activity.ShopActivity"/>
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.StartActivity"  android:windowSoftInputMode="stateVisible" android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.MapsActivity" />
         <activity android:name=".activity.QRReadActivity"

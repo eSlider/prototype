@@ -11,7 +11,8 @@ public class Advert {
     private String description;
     @JsonProperty("pic")
     private byte[] pic;
-
+    @JsonProperty("wallet")
+    private String wallet;
     public Advert() {
     }
 
