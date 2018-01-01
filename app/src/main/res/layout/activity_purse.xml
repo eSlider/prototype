@@ -37,13 +37,13 @@
         <Button
             android:id="@+id/btn_send"
             android:layout_width="match_parent"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
             android:text="@string/send_title"
             android:background="@color/colorPrimary"
-            android:paddingTop="30dp"
-            android:paddingBottom="30dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/btn_receive"
@@ -54,8 +54,8 @@
             android:text="@string/receive_title"
             android:background="@color/colorPrimary"
 
-            android:paddingTop="30dp"
-            android:paddingBottom="30dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/btn_change"
@@ -65,8 +65,8 @@
             android:layout_marginLeft="40dp"
             android:text="@string/change_title"
             android:background="@color/colorPrimary"
-            android:paddingTop="30dp"
-            android:paddingBottom="30dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 

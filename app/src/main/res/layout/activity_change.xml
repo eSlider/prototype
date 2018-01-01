@@ -28,7 +28,7 @@
                 android:textSize="10pt"
                 android:layout_marginTop="10dp"
                 android:textStyle="bold"
-                android:text="STUB активити предназначена для покупки/продажи токенов за фиаты или обмена на другие токены. Необходимо реализовать ввод данных (карта, вебмани итд). Пока пополнение по кнопки 1 eth"/>
+                android:text="STUB активити предназначена для покупки/продажи токенов за фиаты или обмена на другие токены. Необходимо реализовать ввод данных (карта, вебмани итд). Пока пополнение по кнопки  на 1 cc€"/>
 
 
             <Button
@@ -36,7 +36,7 @@
                 android:layout_marginTop="50dp"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
-                android:text="Получить 1 eth"
+                android:text="Получить 1 cc€"
                 android:paddingRight="50dp"
                 android:paddingLeft="50dp"
                 android:layout_height="wrap_content" />

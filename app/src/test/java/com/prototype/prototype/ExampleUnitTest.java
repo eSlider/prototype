@@ -1,4 +1,4 @@
-package com.prototype.prototype;
+package com.cryptopay.prototype;
 
 import org.junit.Test;
 

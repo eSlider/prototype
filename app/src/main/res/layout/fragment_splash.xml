@@ -2,21 +2,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.prototype.prototype.fragment.SplashFragment"
+    tools:context="com.cryptopay.prototype.fragment.SplashFragment"
     android:background="@color/colorPrimary">
 
     <ImageView
+        android:paddingTop="40dp"
         android:id="@+id/iv_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
         android:foregroundGravity="center"
         android:src="@drawable/logo" />
 
     <TextView
+        android:paddingTop="90dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:text="PROTOTYPE"
         android:textColor="@color/whiteColor"
