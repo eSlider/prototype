@@ -13,6 +13,15 @@ public class Advert {
     private byte[] pic;
     @JsonProperty("wallet")
     private String wallet;
+
+    @JsonProperty("address")
+    private String address;
+    @JsonProperty("addAddress")
+    private String addAddress;
+    @JsonProperty("latitude")
+    private double latitude;
+    @JsonProperty("longitude")
+    private double longitude;
     public Advert() {
     }
 
@@ -58,5 +67,37 @@ public class Advert {
 
     public void setWallet(String wallet) {
         this.wallet = wallet;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddAddress() {
+        return addAddress;
+    }
+
+    public void setAddAddress(String addAddress) {
+        this.addAddress = addAddress;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

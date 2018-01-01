@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">CryptoPay</string>
+    <string name="app_name">CPay</string>
     <string name="adverts_title">adverts</string>
     <string name="settings_title">settings</string>
     <string name="profile_title">profile</string>
     <string name="search_title">search</string>
+    <string name="location_title">location</string>
     <string name="view_nav_open">Open</string>
     <string name="view_nav_close">Close</string>
     <string name="loading">Loading…</string>

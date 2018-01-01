@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -67,17 +68,17 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(totalPrice <= 0 ){
+                if (totalPrice <= 0) {
                     Toast.makeText(ShopActivity.this, R.string.danger_make_you_order, Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(Constants.balance < totalPrice){
+                if (Constants.balance < totalPrice) {
                     Toast.makeText(ShopActivity.this, R.string.danger_not_enough_money, Toast.LENGTH_LONG).show();
-                    totalPrice =0;
+                    totalPrice = 0;
                     tvShopcart.setText("make your order");
                     return;
                 }
-                if (advert == null || advert.getWallet() == null || advert.getWallet().isEmpty() ) {
+                if (advert == null || advert.getWallet() == null || advert.getWallet().isEmpty()) {
                     Toast.makeText(ShopActivity.this, R.string.danger_address_recepient_isempty, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -98,13 +99,15 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
 
         if (requestCode == BUY_FROM_CART) {
             if (resultCode == RESULT_OK) {
-                totalPrice =0;
+                totalPrice = 0;
                 tvShopcart.setText("order has been paid");
-            }else {
+            } else {
 
             }
         }
     }
+
+    public static final int SWITCH_FROM_SHOP = 301;
 
     private void initToolbar() {
 //        tvShopCart = (TextView) findViewById(R.id.tv_shop_cart);
@@ -134,14 +137,34 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
 //                return false;
 //            }
 //        });
-//        toolbar.inflateMenu(R.menu.shop_menu);
+        toolbar.inflateMenu(R.menu.menu);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.location:
+                        if (advert != null) {
+                            Intent intent = new Intent(ShopActivity.this, MapsActivity.class);
+                            ArrayList<Advert> adverts = new ArrayList<>();
+                            adverts.add(advert);
+                            Constants.advertDTO.setData(adverts);
+                            intent.putExtra("from", SWITCH_FROM_SHOP);
+                            startActivityForResult(intent, SWITCH_FROM_SHOP);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
     public void onItemClick(@NonNull Item item) {
         float price = item.getPrice();
         totalPrice += price;
-        tvShopcart.setText("Total :" + String.format("%.3f",totalPrice).replace(",",".") + " cc€");
+        tvShopcart.setText("Total :" + String.format("%.3f", totalPrice).replace(",", ".") + " cc€");
     }
 
     private class ShopTask extends AsyncTask<Advert, Void, ItemDTO> {

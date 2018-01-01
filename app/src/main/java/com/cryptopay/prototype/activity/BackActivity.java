@@ -186,10 +186,10 @@ public class BackActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 drawerLayout.closeDrawers();
                 switch (item.getItemId()) {
-                    case R.id.main:
-                        showNotificationTab();
-                    case R.id.settings:
-                        break;
+//                    case R.id.main:
+//                        showNotificationTab();
+//                    case R.id.settings:
+//                        break;
                     default:
                         break;
                 }
@@ -199,7 +199,7 @@ public class BackActivity extends AppCompatActivity {
     }
 
     private void showNotificationTab() {
-        viewPager.setCurrentItem(Constants.TAB_ONE);
+//        viewPager.setCurrentItem(Constants.TAB_ONE);
     }
 
     public void switchSend() {

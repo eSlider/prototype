@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
     private List<Advert> adverts;
     private AdvertListAdapter mAdapter;
     private LoadingView mLoadingView;
+    private SearchView searchView;
+    private List<Advert> searchList = new ArrayList<>();
 
 
     @Override
@@ -104,7 +107,38 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
             }
         });
 
+        searchView = (SearchView) findViewById(R.id.svSearch);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                newText = newText.toLowerCase();
+                mLoadingView.showLoadingIndicator();
+                searchList = new ArrayList<>();
+                for (Advert advert : adverts) {
+                    if(advert.getTitle().toLowerCase().contains(newText) || advert.getDescription().toLowerCase().contains(newText)){
+                        searchList.add(advert);
+                    }
+                }
+                mAdapter.changeDataSet(searchList);
+                mLoadingView.hideLoadingIndicator();
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                mLoadingView.showLoadingIndicator();
+                mAdapter.changeDataSet(adverts);
+                mLoadingView.hideLoadingIndicator();
+                return false;
+            }
+        });
 
     }
 
@@ -126,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
     }
 
 
+    public static final int SWITCH_FROM_MAIN = 300;
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -136,9 +171,12 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.search:
-//                        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-//                        startActivity(intent);
+                    case R.id.location:
+
+                        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                        Constants.advertDTO.setData(adverts);
+                        intent.putExtra("from", SWITCH_FROM_MAIN);
+                        startActivityForResult(intent, SWITCH_FROM_MAIN);
                         break;
                     default:
                         break;
@@ -160,11 +198,11 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 drawerLayout.closeDrawers();
                 switch (item.getItemId()) {
-                    case R.id.main:
-                        break;
-                    case R.id.settings:
-                        switchSetting();
-                        break;
+//                    case R.id.main:
+//                        break;
+//                    case R.id.settings:
+//                        switchSetting();
+//                        break;
                     default:
                         break;
                 }

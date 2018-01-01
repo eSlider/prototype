@@ -6,10 +6,8 @@ import com.cryptopay.prototype.domain.dto.ItemDTO;
 import com.cryptopay.prototype.domain.dto.TransactionDTO;
 
 public class Constants {
-    public static final int TAB_ONE = 0;
-    public static final int TAB_TWO = 1;
-    public static final int TAB_THREE = 2;
-    public static AdvertDTO advertDTO;
+
+    public static AdvertDTO advertDTO = new AdvertDTO();
     public static ItemDTO itemDTO;
     public static TransactionDTO transactionDTO = new TransactionDTO();
     public static int CART_COUNT = 0;
@@ -29,7 +27,8 @@ public class Constants {
 
     public static class URL {
         public static String PORT = "";
-        public static String HOST = "http://95.85.8.20"+PORT+"/";
+//        public static String HOST = "http://95.85.8.20"+PORT+"/";
+        public static String HOST = "http://192.168.0.104:8080"+PORT+"/";
         public static String FIND_ALL_ADVERT = HOST+"findalladvert";
         public static String FIND_ALL_ITEM = HOST+"findallitembyid";
         public static String GET_TEST_ETH = HOST+"gettesteth/"+wallet.getAddress();
