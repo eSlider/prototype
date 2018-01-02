@@ -6,8 +6,11 @@ import android.util.Log;
 
 import com.cryptopay.prototype.Constants;
 import com.cryptopay.prototype.domain.Wallet;
+import com.cryptopay.prototype.domain.dto.AdvertDTO;
+import com.cryptopay.prototype.domain.dto.TypeItemDTO;
 
 import org.springframework.http.HttpMethod;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
@@ -219,6 +222,32 @@ public class Web3Utils {
 //            RestTemplate template = new RestTemplate();
 //            template.exchange(Constants.URL.GET_STATUS, HttpMethod.GET, null, Void.class);
             return null;
+        }
+    }
+
+    public static class GetAllTypeItem extends AsyncTask<Void, Void, TypeItemDTO> {
+
+        @Override
+        protected TypeItemDTO doInBackground(Void... params) {
+            RestTemplate template = new RestTemplate();
+            template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            try {
+                return template.getForObject(Constants.URL.FIND_ALL_TYPE, TypeItemDTO.class);
+            } catch (RuntimeException exception) {
+                System.out.println(exception.toString());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(TypeItemDTO typeItemDTO) {
+            if (typeItemDTO == null || typeItemDTO.getData() == null) {
+                return;
+            }
+
+            Constants.typeItemDTO = typeItemDTO;
+
+
         }
     }
 }

@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
                 return false;
             }
         });
-
+        new Web3Utils.GetAllTypeItem().execute();
     }
 
     private void initWallet() {
@@ -288,6 +288,7 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
 
         }
     }
+
 
 
 

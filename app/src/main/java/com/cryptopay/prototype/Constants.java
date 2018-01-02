@@ -4,11 +4,13 @@ import com.cryptopay.prototype.domain.Wallet;
 import com.cryptopay.prototype.domain.dto.AdvertDTO;
 import com.cryptopay.prototype.domain.dto.ItemDTO;
 import com.cryptopay.prototype.domain.dto.TransactionDTO;
+import com.cryptopay.prototype.domain.dto.TypeItemDTO;
 
 public class Constants {
 
     public static AdvertDTO advertDTO = new AdvertDTO();
     public static ItemDTO itemDTO;
+    public static TypeItemDTO typeItemDTO;
     public static TransactionDTO transactionDTO = new TransactionDTO();
     public static int CART_COUNT = 0;
     public static Wallet wallet;
@@ -33,6 +35,7 @@ public class Constants {
         public static String FIND_ALL_ITEM = HOST+"findallitembyid";
         public static String GET_TEST_ETH = HOST+"gettesteth/"+wallet.getAddress();
         public static String FIND_ALL_TRANSACTION = HOST+"findalltransactionbyaddress/"+wallet.getAddress();
+        public static String FIND_ALL_TYPE = HOST+"findalltype";
         public static String GET_STATUS = HOST+"getstatus/"+wallet.getAddress();
         public static String SAVE_TRANSACTION = HOST+"savetransaction/";
         public static String TRANSACTION_VIEWER = "https://rinkeby.etherscan.io/tx/";
