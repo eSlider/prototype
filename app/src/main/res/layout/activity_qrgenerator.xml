@@ -22,10 +22,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:text="@string/title_your_address"
             android:textAlignment="center"
-            android:textSize="10pt"
+            android:textSize="8pt"
             android:textStyle="bold" />
 
         <TextView
@@ -34,23 +34,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textAlignment="center"
-            android:textSize="11pt"
+            android:textSize="8pt"
             android:textStyle="bold" />
-
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/btnCopyAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Copy"
+            android:textColor="@color/whiteColor"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:drawableRight="@mipmap/ic_content_copy_white_24dp"
+            android:background="@color/colorPrimaryDark" />
         <TextView
             android:id="@+id/tv_belov"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:text="@string/title_qrcode"
             android:textAlignment="center"
-            android:textSize="14pt"
+            android:textSize="12pt"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_below="@+id/tv_belov">
 
             <ImageView

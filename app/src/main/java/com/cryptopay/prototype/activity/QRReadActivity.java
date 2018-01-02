@@ -103,7 +103,7 @@ public class QRReadActivity extends AppCompatActivity implements ZXingScannerVie
         scannerView.stopCamera();
     }
 
-    public static final String ADDRESS = "";
+    public static final String ADDRESS = "Address from qr";
     @Override
     public void handleResult(final Result result) {
         final String scanResult = result.getText();

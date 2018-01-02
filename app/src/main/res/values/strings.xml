@@ -19,7 +19,7 @@
     <string name="text_your_balance">Your balance</string>
     <string name="purse_title">Purse</string>
     <string name="setting_title">Settings</string>
-    <string name="favorite_menu">favorite</string>
+    <string name="templates_menu">templates</string>
     <string name="qrcode_menu">scan qrcode</string>
     <string name="address_title">Address</string>
     <string name="address_recepient_title">Address recepient</string>

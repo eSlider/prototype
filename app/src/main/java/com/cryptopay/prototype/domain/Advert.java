@@ -22,6 +22,10 @@ public class Advert {
     private double latitude;
     @JsonProperty("longitude")
     private double longitude;
+
+    @JsonProperty("typeItem")
+    private TypeItem typeItem;
+
     public Advert() {
     }
 
@@ -99,5 +103,13 @@ public class Advert {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public TypeItem getTypeItem() {
+        return typeItem;
+    }
+
+    public void setTypeItem(TypeItem typeItem) {
+        this.typeItem = typeItem;
     }
 }

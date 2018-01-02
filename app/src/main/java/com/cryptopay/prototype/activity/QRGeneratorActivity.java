@@ -1,10 +1,14 @@
 package com.cryptopay.prototype.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,8 +27,7 @@ public class QRGeneratorActivity extends AppCompatActivity {
     private ImageView imageView;
     private TextView tvAddress;
     private String EditTextValue;
-    private String text2Qr;
-    private Thread thread;
+    private Button btnCopyAddress;
     public final static int QRcodeWidth = 500;
     private Bitmap bitmap;
 
@@ -37,6 +40,17 @@ public class QRGeneratorActivity extends AppCompatActivity {
         tvAddress = (TextView) findViewById(R.id.tv_address);
         tvAddress.setText(Constants.wallet.getAddress());
         EditTextValue = Constants.wallet.getAddress().trim();
+
+        btnCopyAddress = (Button) findViewById(R.id.btnCopyAddress);
+        btnCopyAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("address", tvAddress.getText().toString());
+                clipboard.setPrimaryClip(clip);
+            }
+        });
+
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix = multiFormatWriter.encode(EditTextValue, BarcodeFormat.QR_CODE, 200, 200);
