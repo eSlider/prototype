@@ -14,6 +14,10 @@ public class TypeItem {
     public TypeItem() {
     }
 
+    public TypeItem(String title) {
+        this.title = title;
+    }
+
     public long getId() {
         return id;
     }

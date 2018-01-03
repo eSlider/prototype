@@ -29,8 +29,8 @@ public class Constants {
 
     public static class URL {
         public static String PORT = "";
-//        public static String HOST = "http://95.85.8.20"+PORT+"/";
-        public static String HOST = "http://192.168.0.104:8080"+PORT+"/";
+        public static String HOST = "http://95.85.8.20"+PORT+"/";
+//        public static String HOST = "http://192.168.0.104:8080"+PORT+"/";
         public static String FIND_ALL_ADVERT = HOST+"findalladvert";
         public static String FIND_ALL_ITEM = HOST+"findallitembyid";
         public static String GET_TEST_ETH = HOST+"gettesteth/"+wallet.getAddress();

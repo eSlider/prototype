@@ -18,11 +18,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.cryptopay.prototype.Constants;
 import com.cryptopay.prototype.domain.Advert;
+import com.cryptopay.prototype.domain.TypeItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,6 +37,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.cryptopay.prototype.R;
 import com.kenai.jffi.Main;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +56,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private int from;
     private Toolbar toolbar;
+    private CharSequence[] items;
+    private List<Marker> markers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Intent intent = getIntent();
         from = intent.getIntExtra("from", 0);
+        items = new CharSequence[Constants.typeItemDTO.getData().size()];
+        int i = 0;
+        for (TypeItem item : Constants.typeItemDTO.getData()) {
+            items[i] = item.getTitle();
+            i++;
+        }
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -82,6 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.history_toolbar);
         toolbar.setTitle("Location");
+        toolbar.inflateMenu(R.menu.map_menu);
         toolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.ic_arrow_left_thick));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +101,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 onBackPressed();
             }
         });
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.filter:
+                        showDialog();
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+    public void showDialog() {
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Make your selection");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+//                Toast.makeText(MapsActivity.this, items[item],Toast.LENGTH_LONG).show();
+                showMarkers(new TypeItem(items[item].toString()));
+            }
+        });
+        builder.setNeutralButton("Clear", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                showMarkers(null);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void checkEnabled() {
@@ -171,13 +218,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setOnInfoWindowClickListener(this);
         mMap.setOnMarkerClickListener(this);
-        int height = 100;
-        int width = 100;
+
 
         if (from == MainActivity.SWITCH_FROM_MAIN) {
+            int height = 100;
+            int width = 100;
             List<Advert> data = Constants.advertDTO.getData();
             BitmapDescriptor bitmap;
             for (Advert advert : data) {
+
                 if (advert.getLatitude() != 0d && advert.getLongitude() != 0d) {
                     byte[] pic = advert.getTypeItem().getPic();
                     if (pic != null) {
@@ -187,8 +236,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     } else {
                         bitmap = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
                     }
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(advert.getLatitude(), advert.getLongitude())).icon(bitmap
-                    ).title(advert.getTitle()).snippet(advert.getDescription())).setTag(advert);
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(advert.getLatitude(), advert.getLongitude())).icon(bitmap
+                    ).title(advert.getTitle()).snippet(advert.getDescription()));
+                    markers.add(marker);
+                    marker.setTag(advert);
                 }
 
             }
@@ -199,22 +250,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng latLng = new LatLng(advert.getLatitude(), advert.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(latLng).icon(
                         BitmapDescriptorFactory
-                                .fromResource(R.mipmap.ic_app)).title(advert.getTitle()));
+                                .defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(advert.getTitle()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             }
         }
+    }
 
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(-34, 145)).icon(
-//                BitmapDescriptorFactory
-//                        .defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-//
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(-34, 158)).icon(
-//                BitmapDescriptorFactory.defaultMarker()));
-//
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(-34, 155)).icon(
-//                BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
-
-
+    public void showMarkers(TypeItem typeItem) {
+        Advert tag;
+        for (Marker marker : markers) {
+            tag = (Advert) marker.getTag();
+            if(typeItem==null){
+                marker.setVisible(true);
+            }
+            else if(tag.getTypeItem().getTitle().equals(typeItem.getTitle())){
+                marker.setVisible(true);
+            }else {
+                marker.setVisible(false);
+            }
+        }
     }
 
     @Override

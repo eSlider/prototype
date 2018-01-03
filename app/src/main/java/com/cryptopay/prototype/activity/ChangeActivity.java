@@ -44,7 +44,7 @@ public class ChangeActivity extends AppCompatActivity {
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.send_toolbar);
-        toolbar.setTitle(R.string.receive_title);
+        toolbar.setTitle(R.string.change_title);
 
 //        toolbar.setBackgroundColor(getResources().getColor(R.color.whiteColor));
         toolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.ic_arrow_left_thick));
