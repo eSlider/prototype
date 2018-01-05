@@ -117,7 +117,7 @@ public class PurseActivity extends AppCompatActivity {
                 String TAG = "web3";
                 // We start by creating a new web3j instance to connect to remote nodes on the network.
                 Web3j web3j = Web3jFactory.build(new HttpService(
-                        "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL"));  // FIXME: Enter your Infura token here;
+                        Constants.URL.ETH_NETWORK));  // FIXME: Enter your Infura token here;
                 try {
                     EthGetBalance ethGetBalance = web3j
                             .ethGetBalance(Constants.wallet.getAddress(), DefaultBlockParameterName.LATEST)
@@ -138,7 +138,7 @@ public class PurseActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(tvBalance!=null){
-                tvBalance.setText(String.format("%.3f",Constants.balance).replace(",","."));
+                tvBalance.setText(String.format("%.18f",Constants.balance).replace(",","."));
             }
             tvBalance = null;
         }

@@ -11,6 +11,8 @@ public class Item {
     private String title;
     @JsonProperty("price")
     private float price;
+    @JsonProperty("priceCurrency")
+    private float priceCurrency;
     @JsonIgnore
     private Advert advert;
 
@@ -49,5 +51,13 @@ public class Item {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public float getPriceCurrency() {
+        return priceCurrency;
+    }
+
+    public void setPriceCurrency(float priceCurrency) {
+        this.priceCurrency = priceCurrency;
     }
 }

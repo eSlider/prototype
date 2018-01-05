@@ -42,7 +42,7 @@ public class SendActivity extends AppCompatActivity {
         setContentView(LAYOUT);
 
         Intent intent = getIntent();
-        float totalPrice = intent.getFloatExtra("totalPrice", .0f);
+        double totalPrice = intent.getDoubleExtra("totalPrice", .0d);
         String address = intent.getStringExtra("address");
 
         initToolbar();
@@ -53,7 +53,7 @@ public class SendActivity extends AppCompatActivity {
         tvNameTemplate = (TextView) findViewById(R.id.tv_name_template);
         tvBalance = (TextView) findViewById(R.id.tv_balance);
         fabSend = (FloatingActionButton) findViewById(R.id.fab_send);
-        tvBalance.setText(getResources().getString(R.string.text_your_balance) + " :" + String.format("%.3f", Constants.balance).replace(",", ".") + " cc€");
+        tvBalance.setText(getResources().getString(R.string.text_your_balance) + " :" + String.format("%.18f", Constants.balance).replace(",", ".") + " eth");
 
         btnCopyAddressRecepient = (Button) findViewById(R.id.btnCopyAddressRecepient);
         btnCopyAddressRecepient.setOnClickListener(new View.OnClickListener() {
@@ -65,9 +65,9 @@ public class SendActivity extends AppCompatActivity {
             }
         });
 
-        etAddressRecepient.setText("0xE44c4cf797505AF1527B11e4F4c6f95531b4Be24");
-        if (totalPrice > 0.0f && !address.isEmpty()) {
-            etAmount.setText(String.format("%.3f", totalPrice).replace(",", "."));
+//        etAddressRecepient.setText("0xE44c4cf797505AF1527B11e4F4c6f95531b4Be24");
+        if (totalPrice > 0.0d && !address.isEmpty()) {
+            etAmount.setText(String.format("%.18f", totalPrice).replace(",", "."));
             etAddressRecepient.setText(address.trim());
             fabSend.requestFocus();
         }

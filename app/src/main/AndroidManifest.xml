@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
 
 
 
@@ -26,12 +29,14 @@
         <activity android:name=".activity.ChangeActivity"/>
         <activity android:name=".activity.PurseActivity"/>
         <activity android:name=".activity.SendActivity"/>
+        <activity android:name=".activity.InfoActivity"/>
         <activity android:name=".activity.TemplateActivity"/>
         <activity android:name=".activity.ShopActivity"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.HistoryActivity"/>
-        <activity android:name=".activity.StartActivity"  android:windowSoftInputMode="stateVisible" android:noHistory="true" >
+        <activity android:name=".activity.RecoveryActivity"/>
+        <activity android:name=".activity.StartActivity"  android:windowSoftInputMode="stateVisible" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

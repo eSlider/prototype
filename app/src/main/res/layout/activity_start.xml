@@ -2,139 +2,140 @@
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/start_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    android:fitsSystemWindows="true"
-    android:id="@+id/start_container">
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:id="@+id/ll_start1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="top"
-        android:visibility="invisible"
-        android:paddingTop="70dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="YOUR PASSWORD FOR WALLET/APP"
-            android:textColor="@color/whiteColor"
-            android:textSize="7pt" />
-
-        <com.jungly.gridpasswordview.GridPasswordView
-            android:id="@+id/pswView"
+        <LinearLayout
+            android:id="@+id/ll_start1"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="5dp"
-            app:gpvGridColor="#ffffff"
-            app:gpvLineColor="#2196F3"
-            app:gpvLineWidth="1dp"
-            app:gpvPasswordLength="4"
-            app:gpvPasswordTransformation="*"
-            app:gpvPasswordType="numberPassword"
-            app:gpvTextColor="#2196F3"
-            app:gpvTextSize="25sp" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingTop="70dp"
+            android:visibility="invisible">
 
-    <LinearLayout
-        android:id="@+id/ll_start2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="top"
-        android:visibility="invisible"
-        android:paddingTop="50dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="REMEMBER! this is password for your wallet and app"
-            android:textColor="@color/whiteColor"
-            android:textSize="7pt" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="YOUR PASSWORD FOR WALLET/APP"
+                android:textColor="@color/whiteColor"
+                android:textSize="7pt" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="set password"
-            android:textColor="@color/whiteColor" />
+            <com.jungly.gridpasswordview.GridPasswordView
+                android:id="@+id/pswView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:padding="5dp"
+                app:gpvGridColor="#ffffff"
+                app:gpvLineColor="#2196F3"
+                app:gpvLineWidth="1dp"
+                app:gpvPasswordLength="4"
+                app:gpvPasswordTransformation="*"
+                app:gpvPasswordType="numberPassword"
+                app:gpvTextColor="#2196F3"
+                app:gpvTextSize="25sp" />
 
-        <com.jungly.gridpasswordview.GridPasswordView
-            android:id="@+id/pswViewPass1"
+            <TextView
+                android:id="@+id/tv_start_link"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="MORE ABOUT US ON CPAY.CLICK"
+                android:textColor="@color/whiteColor"
+                android:textSize="8pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_start2"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginVertical="15dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="5dp"
-            app:gpvGridColor="#ffffff"
-            app:gpvLineColor="#2196F3"
-            app:gpvLineWidth="1dp"
-            app:gpvPasswordLength="4"
-            app:gpvPasswordTransformation="*"
-            app:gpvPasswordType="numberPassword"
-            app:gpvTextColor="#2196F3"
-            app:gpvTextSize="25sp" />
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingTop="50dp"
+            android:visibility="invisible">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="repeat"
-            android:textColor="@color/whiteColor" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="REMEMBER! this is password for your wallet and app"
+                android:textColor="@color/whiteColor"
+                android:textSize="7pt" />
 
-        <com.jungly.gridpasswordview.GridPasswordView
-            android:id="@+id/pswViewPass2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="5dp"
-            app:gpvGridColor="#ffffff"
-            app:gpvLineColor="#2196F3"
-            app:gpvLineWidth="1dp"
-            app:gpvPasswordLength="4"
-            app:gpvPasswordTransformation="*"
-            app:gpvPasswordType="numberPassword"
-            app:gpvTextColor="#2196F3"
-            app:gpvTextSize="25sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="set password"
+                android:textColor="@color/whiteColor" />
+
+            <com.jungly.gridpasswordview.GridPasswordView
+                android:id="@+id/pswViewPass1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginVertical="15dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:padding="5dp"
+                app:gpvGridColor="#ffffff"
+                app:gpvLineColor="#2196F3"
+                app:gpvLineWidth="1dp"
+                app:gpvPasswordLength="4"
+                app:gpvPasswordTransformation="*"
+                app:gpvPasswordType="numberPassword"
+                app:gpvTextColor="#2196F3"
+                app:gpvTextSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="repeat"
+                android:textColor="@color/whiteColor" />
+
+            <com.jungly.gridpasswordview.GridPasswordView
+                android:id="@+id/pswViewPass2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:padding="5dp"
+                app:gpvGridColor="#ffffff"
+                app:gpvLineColor="#2196F3"
+                app:gpvLineWidth="1dp"
+                app:gpvPasswordLength="4"
+                app:gpvPasswordTransformation="*"
+                app:gpvPasswordType="numberPassword"
+                app:gpvTextColor="#2196F3"
+                app:gpvTextSize="25sp" />
+            <TextView
+                android:id="@+id/tv_restore_acc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/recovery_title"
+                android:textColor="@color/whiteColor"
+                android:textSize="9pt"
+                android:textStyle="bold" />
+        </LinearLayout>
 
 
-    </LinearLayout>
-
-
-    <!--<com.chaos.view.PinView-->
-    <!--android:id="@+id/pinView"-->
-    <!--style="@style/PinWidget.PinView"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:hint="Hint."-->
-    <!--android:inputType="text"-->
-    <!--android:padding="10dp"-->
-    <!--android:textColor="@color/blackColor"-->
-    <!--android:textSize="18sp"-->
-    <!--app:itemCount="4"-->
-    <!--android:gravity="center_vertical"-->
-    <!--app:itemHeight="48dp"-->
-    <!--app:itemRadius="4dp"-->
-    <!--app:itemSpacing="0dp"-->
-    <!--app:itemWidth="36dp"-->
-    <!--app:lineColor="@color/colorPrimary"-->
-    <!--app:lineWidth="2dp"-->
-    <!--app:viewType="rectangle" />-->
 
 </android.support.constraint.ConstraintLayout>

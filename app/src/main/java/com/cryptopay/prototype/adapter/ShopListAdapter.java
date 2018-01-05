@@ -56,7 +56,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ShopVi
     public void onBindViewHolder(ShopViewHolder holder, final int position) {
         Item item = list.get(position);
         holder.title.setText(item.getTitle());
-        holder.description.setText(String.format("%.3f",item.getPrice()).replace(",",".")+" cc€");
+        holder.description.setText(String.format("%.2f",item.getPriceCurrency()).replace(",",".")+" euro");
         holder.itemView.setTag(item);
         holder.itemView.setOnClickListener(mInternalListener);
     }

@@ -1,14 +1,22 @@
 package com.cryptopay.prototype.activity;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,7 +28,9 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.cryptopay.prototype.domain.TypeItem;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.cryptopay.prototype.Constants;
 import com.cryptopay.prototype.R;
@@ -34,6 +44,12 @@ import com.cryptopay.prototype.domain.dto.AdvertDTO;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
                 mLoadingView.showLoadingIndicator();
                 searchList = new ArrayList<>();
                 for (Advert advert : adverts) {
-                    if(advert.getTitle().toLowerCase().contains(newText) || advert.getDescription().toLowerCase().contains(newText)){
+                    if (advert.getTitle().toLowerCase().contains(newText) || advert.getDescription().toLowerCase().contains(newText)) {
                         searchList.add(advert);
                     }
                 }
@@ -140,21 +156,124 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
             }
         });
         new Web3Utils.GetAllTypeItem().execute();
+
+        sPref = getPreferences(MODE_PRIVATE);
+        if (!sPref.getBoolean(Constants.save_recovery, false)) {
+            if (Constants.wallet != null && Constants.wallet.getFile() != null && !Constants.wallet.getFile().equals("")) {
+                showDialogRecovery();
+            }
+        }
+    }
+
+    public static final int SWITCH_FROM_MAIN_FOR_RECOVERY = 500;
+
+    private final static int REQUEST_WRITE_EXTERNAL_STORAGE = 3;
+    private final static int REQUEST_READ_EXTERNAL_STORAGE = 4;
+
+    public void showDialogRecovery() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
+            }54
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Save your key-file for next recovery ethereum wallet");
+
+        builder.setNeutralButton("On device", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                String destinationFilename = android.os.Environment.getExternalStorageDirectory().getPath()+File.separatorChar+"key"+Constants.wallet.getAddress()+".json";
+
+                BufferedInputStream bis = null;
+                BufferedOutputStream bos = null;
+
+                try {
+                    bis = new BufferedInputStream(new FileInputStream(Constants.wallet.getFile()));
+                    bos = new BufferedOutputStream(new FileOutputStream(destinationFilename, false));
+                    byte[] buf = new byte[1024];
+                    bis.read(buf);
+                    do {
+                        bos.write(buf);
+                    } while(bis.read(buf) != -1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (bis != null) bis.close();
+                        if (bos != null) bos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(MainActivity.this, "Key file saved in "+destinationFilename,Toast.LENGTH_LONG).show();
+                    sPref = getPreferences(MODE_PRIVATE);
+                    SharedPreferences.Editor edit = sPref.edit();
+                    edit.putBoolean(Constants.save_recovery, true);
+                    edit.commit();
+                }
+
+            }
+        });
+//        builder.setPositiveButton("Send mail", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                try {
+////                    File Root= Environment.getExternalStorageDirectory();
+//                    Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+//                    intent.setType("text/plain");
+//                    String message="File to be shared is key.";
+//                    intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+//                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile( new File(Constants.wallet.getFile())));
+//                    intent.putExtra(Intent.EXTRA_TEXT, message);
+////                    intent.setData(Uri.parse("mailto:your email"));
+////                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//                    startActivity(intent);
+//
+//                    sPref = getPreferences(MODE_PRIVATE);
+//                    SharedPreferences.Editor edit = sPref.edit();
+//                    edit.putBoolean(Constants.save_recovery, true);
+//                    edit.commit();
+//
+//                } catch(Exception e)  {
+//                    System.out.println("is exception raises during sending mail"+e);
+//                }
+//            }
+//        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SWITCH_FROM_MAIN_FOR_RECOVERY) {
+            if (resultCode == RESULT_OK) {
+                System.out.println("ok");
+            }
+        }
     }
 
     private void initWallet() {
-        sPref = getPreferences(MODE_PRIVATE);
-        Constants.wallet = new Wallet();
-        if (!sPref.getString(Constants.wallet_address, "").equals("")) {
-            Constants.wallet.setAddress(sPref.getString(Constants.wallet_address, ""));
-            Constants.wallet.setPassword(sPref.getString(Constants.wallet_password, ""));
-            Constants.wallet.setFile(sPref.getString(Constants.wallet_file, ""));
-            Constants.wallet.setPublicKey(new BigInteger(sPref.getString(Constants.wallet_publicKey, "0")));
-            Constants.wallet.setPrivateKey(new BigInteger(sPref.getString(Constants.wallet_privateKey, "0")));
-            new Web3Utils.GetBalanceWallet().execute();
-        } else {
-            new Web3Utils.GenerateNewWallet().execute(getApplicationContext().getFilesDir().getAbsolutePath(), "123123123", getPreferences(MODE_PRIVATE));
-        }
+//        sPref = getPreferences(MODE_PRIVATE);
+//        Constants.wallet = new Wallet();
+//        if (!sPref.getString(Constants.wallet_address, "").equals("")) {
+//            Constants.wallet.setAddress(sPref.getString(Constants.wallet_address, ""));
+//            Constants.wallet.setPassword(sPref.getString(Constants.wallet_password, ""));
+//            Constants.wallet.setFile(sPref.getString(Constants.wallet_file, ""));
+//            Constants.wallet.setPublicKey(new BigInteger(sPref.getString(Constants.wallet_publicKey, "0")));
+//            Constants.wallet.setPrivateKey(new BigInteger(sPref.getString(Constants.wallet_privateKey, "0")));
+//            new Web3Utils.GetBalanceWallet().execute();
+//        } else {
+//            finish();
+////            new Web3Utils.GenerateNewWallet().execute(getApplicationContext().getFilesDir().getAbsolutePath(), "123123123", getPreferences(MODE_PRIVATE));
+//        }
 
 
     }
@@ -220,10 +339,12 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
         Intent intent = new Intent(MainActivity.this, PurseActivity.class);
         startActivity(intent);
     }
+
     public void switchHistory() {
         Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
         startActivity(intent);
     }
+
     public void switchContent(Advert advert) {
         ShopActivity.advert = advert;
         Intent intent = new Intent(MainActivity.this, ShopActivity.class);
@@ -249,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
 
     @Override
     public void onItemClick(@NonNull Advert advert) {
-       switchContent(advert);
+        switchContent(advert);
     }
 
 
@@ -288,8 +409,6 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
 
         }
     }
-
-
 
 
 }

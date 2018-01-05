@@ -34,7 +34,7 @@ import java.util.List;
 public class ShopActivity extends AppCompatActivity implements ShopListAdapter.OnItemClick {
     public static final int LAYOUT = R.layout.activity_shop;
 
-    public float totalPrice = 0.0f;
+    public double totalPrice = 0.0d;
     private Toolbar toolbar;
 
     private RecyclerView recyclerView;
@@ -43,9 +43,9 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
     private ShopListAdapter mAdapter;
     private LoadingView mLoadingView;
     public static Advert advert;
-
+    private double eth_price = 0.0d;
     private Button btnBuy;
-    private TextView tvShopcart;
+    private TextView tvShopcart, tvShopcartEth, tvEth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,9 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
         initToolbar();
 
         btnBuy = (Button) findViewById(R.id.btn_buy);
+        tvEth = (TextView) findViewById(R.id.tv_eth);
         tvShopcart = (TextView) findViewById(R.id.tv_shopcart);
+        tvShopcartEth = (TextView) findViewById(R.id.tv_shopcart_eth);
 
         mAdapter = new ShopListAdapter(new ArrayList<Item>(), this);
         recyclerView = (RecyclerView) findViewById(R.id.shop_recycler_view);
@@ -68,14 +70,19 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (totalPrice <= 0) {
+                if (eth_price <= 0d) {
+                    Toast.makeText(ShopActivity.this, R.string.danger_error_rate_eth, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (totalPrice <= 0d) {
                     Toast.makeText(ShopActivity.this, R.string.danger_make_you_order, Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (Constants.balance < totalPrice) {
+                if (Constants.balance < (totalPrice / eth_price)) {
                     Toast.makeText(ShopActivity.this, R.string.danger_not_enough_money, Toast.LENGTH_LONG).show();
                     totalPrice = 0;
                     tvShopcart.setText("make your order");
+                    tvShopcartEth.setText("TOTAL: 0.0 eth");
                     return;
                 }
                 if (advert == null || advert.getWallet() == null || advert.getWallet().isEmpty()) {
@@ -84,11 +91,13 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
                 }
 
                 Intent intent = new Intent(ShopActivity.this, SendActivity.class);
-                intent.putExtra("totalPrice", totalPrice);
+                intent.putExtra("totalPrice", (totalPrice / eth_price));
                 intent.putExtra("address", advert.getWallet());
                 startActivityForResult(intent, BUY_FROM_CART);
             }
         });
+
+        new GetEthPrice().execute();
     }
 
     public static final int BUY_FROM_CART = 200;
@@ -101,6 +110,7 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
             if (resultCode == RESULT_OK) {
                 totalPrice = 0;
                 tvShopcart.setText("order has been paid");
+                tvShopcartEth.setText("TOTAL: 0.0 eth");
             } else {
 
             }
@@ -112,7 +122,7 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
     private void initToolbar() {
 //        tvShopCart = (TextView) findViewById(R.id.tv_shop_cart);
         toolbar = (Toolbar) findViewById(R.id.shop_toolbar);
-        toolbar.setTitle("Cart");
+        toolbar.setTitle(advert.getTitle());
 //        tvShopCart.setText(R.string.cart_title+Constants.CART_COUNT);
 
 //        toolbar.setBackgroundColor(getResources().getColor(R.color.whiteColor));
@@ -137,11 +147,19 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
 //                return false;
 //            }
 //        });
-        toolbar.inflateMenu(R.menu.menu);
+        toolbar.inflateMenu(R.menu.shop_menu);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.info:
+                        if (advert != null) {
+                            Intent intent = new Intent(ShopActivity.this, InfoActivity.class);
+                            Constants.advert = advert;
+                            intent.putExtra("from", SWITCH_FROM_SHOP);
+                            startActivityForResult(intent, SWITCH_FROM_SHOP);
+                        }
+                        break;
                     case R.id.location:
                         if (advert != null) {
                             Intent intent = new Intent(ShopActivity.this, MapsActivity.class);
@@ -162,9 +180,14 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
 
     @Override
     public void onItemClick(@NonNull Item item) {
-        float price = item.getPrice();
+        double price = item.getPriceCurrency();
         totalPrice += price;
-        tvShopcart.setText("Total :" + String.format("%.3f", totalPrice).replace(",", ".") + " cc€");
+        tvShopcart.setText("Total :" + String.format("%.2f", totalPrice).replace(",", ".") + " euro");
+        if (eth_price > 0.0d) {
+            tvShopcartEth.setText("TOTAL: " + String.format("%.10f", (totalPrice / eth_price)).replace(",", ".") + " eth");
+        } else {
+            tvShopcartEth.setText("TOTAL: 0.0 eth");
+        }
     }
 
     private class ShopTask extends AsyncTask<Advert, Void, ItemDTO> {
@@ -199,5 +222,27 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
                 .setAction("Retry", v -> new ShopActivity.ShopTask().execute());
         snackbar.setDuration(4000);
         snackbar.show();
+    }
+
+    private class GetEthPrice extends AsyncTask<Void, Void, Double> {
+
+
+        @Override
+        protected Double doInBackground(Void... voids) {
+            RestTemplate template = new RestTemplate();
+            template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            try {
+                return template.getForObject(Constants.URL.GET_ETH_PRICE, Double.class);
+            } catch (RuntimeException exception) {
+                System.out.println(exception.toString());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Double price) {
+            eth_price = price.doubleValue();
+            tvEth.setText("Eth rate " + String.format("%.2f", eth_price));
+        }
     }
 }

@@ -53,11 +53,11 @@
             android:layout_marginLeft="40dp"
             android:text="@string/recive_title"
             android:background="@color/colorPrimary"
-
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
             android:layout_height="wrap_content" />
         <Button
+            android:visibility="invisible"
             android:id="@+id/btn_change"
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"

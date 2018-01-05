@@ -2,6 +2,8 @@ package com.cryptopay.prototype.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -11,15 +13,16 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chaos.view.PinView;
 import com.cryptopay.prototype.Constants;
-import com.cryptopay.prototype.fragment.SplashFragment;
-import com.jungly.gridpasswordview.GridPasswordView;
 import com.cryptopay.prototype.R;
 import com.cryptopay.prototype.activity.general.LoadingDialog;
 import com.cryptopay.prototype.activity.general.LoadingView;
 import com.cryptopay.prototype.domain.Wallet;
+import com.cryptopay.prototype.fragment.SplashFragment;
+import com.jungly.gridpasswordview.GridPasswordView;
 
 import java.math.BigInteger;
 
@@ -37,6 +40,7 @@ public class StartActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private String newPassword;
     private LoadingView mLoadingView;
+    private TextView tvRestoreAcc, tvStartLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,8 @@ public class StartActivity extends AppCompatActivity {
         llStart2 = (LinearLayout) findViewById(R.id.ll_start2);
         fragmentManager = getSupportFragmentManager();
         mLoadingView = LoadingDialog.view(getSupportFragmentManager());
-
+        tvRestoreAcc = (TextView) findViewById(R.id.tv_restore_acc);
+        tvStartLink = (TextView) findViewById(R.id.tv_start_link);
 //        if (sPref.getBoolean(Constants.settings_show_splash, false)) {
 //            runSplash();
 //        }
@@ -110,14 +115,15 @@ public class StartActivity extends AppCompatActivity {
                     }
                     newPassword = pswViewPass2.getPassWord();
 //                    mLoadingView.showLoadingIndicator();
-                    AsyncTask<Object, Void, Wallet> execute = new Web3Utils.GenerateNewWallet();
-                    execute.execute(getApplicationContext().getFilesDir().getAbsolutePath(), newPassword, getPreferences(MODE_PRIVATE));
-//                    while (Constants.wallet.getAddress()==null);
+                    AsyncTask<Object, Void, Wallet> execute = new Web3Utils.GenerateNewWallet()
+                            .execute(getApplicationContext().getFilesDir().getAbsolutePath(), newPassword, getPreferences(MODE_PRIVATE));
 //                    try {
-//                        TimeUnit.SECONDS.sleep(3);
+//                        TimeUnit.SECONDS.sleep(5);
 //                    } catch (InterruptedException e) {
 //                        e.printStackTrace();
 //                    }
+
+
                     Intent intent = new Intent(StartActivity.this, MainActivity.class);
                     startActivity(intent);
 
@@ -129,13 +135,44 @@ public class StartActivity extends AppCompatActivity {
                 }
             }
         });
+        tvRestoreAcc.setPaintFlags(tvRestoreAcc.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tvRestoreAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StartActivity.this, RecoveryActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        tvStartLink.setPaintFlags(tvStartLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tvStartLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://cpay.click/"));
+                startActivity(intent);
+            }
+        });
     }
 
-    private void initWallet() {
 
-        Constants.wallet = new Wallet();
-        if (!sPref.getString(Constants.wallet_address, "").equals("")) {
+    private void initWallet() {
+        sPref = getPreferences(MODE_PRIVATE);
+        if (Constants.wallet != null && Constants.wallet.getAddress() != null && !Constants.wallet.getAddress().equals("")) {
+            new Web3Utils.GetBalanceWallet().execute();
+            llStart1.setVisibility(View.VISIBLE);
+            SharedPreferences.Editor ed = sPref.edit();
+            ed.putString(Constants.wallet_address, Constants.wallet.getAddress());
+            ed.putString(Constants.wallet_password, Constants.wallet.getPassword());
+            ed.putString(Constants.wallet_file, Constants.wallet.getFile());
+            ed.putString(Constants.wallet_publicKey, Constants.wallet.getPublicKey().toString());
+            ed.putString(Constants.wallet_privateKey, Constants.wallet.getPrivateKey().toString());
+            ed.putBoolean(Constants.save_recovery, false);
+            ed.commit();
+            if (gpv.requestFocus()) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.showSoftInput(gpv, 2);
+            }
+        } else if (!sPref.getString(Constants.wallet_address, "").equals("")) {
             Constants.wallet.setAddress(sPref.getString(Constants.wallet_address, ""));
             Constants.wallet.setPassword(sPref.getString(Constants.wallet_password, ""));
             Constants.wallet.setFile(sPref.getString(Constants.wallet_file, ""));
@@ -156,7 +193,6 @@ public class StartActivity extends AppCompatActivity {
 
         }
 
-    //TODO: изменить наименование валюты eth -> cc$  ccCoin -> Cryptopaid
     }
 
     public void runSplash() {
@@ -167,26 +203,6 @@ public class StartActivity extends AppCompatActivity {
                 .commit();
     }
 
-
-
-
-//
-//        pinView = (PinView) findViewById(R.id.pinView);
-//        pinView.setTextColor(
-//                ResourcesCompat.getColor(getResources(), R.color.colorAccent, getTheme()));
-//        pinView.setTextColor(
-//                ResourcesCompat.getColorStateList(getResources(), R.color.plus, getTheme()));
-//        pinView.setLineColor(
-//                ResourcesCompat.getColor(getResources(), R.color.colorPrimary, getTheme()));
-//        pinView.setLineColor(
-//                ResourcesCompat.getColorStateList(getResources(), R.color.plus, getTheme()));
-//        pinView.setItemCount(4);
-//        pinView.setItemHeight(getResources().getDimensionPixelSize(R.dimen.pv_pin_view_item_size));
-//        pinView.setItemWidth(getResources().getDimensionPixelSize(R.dimen.pv_pin_view_item_size));
-//        pinView.setItemRadius(getResources().getDimensionPixelSize(R.dimen.pv_pin_view_item_radius));
-//        pinView.setItemSpacing(getResources().getDimensionPixelSize(R.dimen.pv_pin_view_item_spacing));
-//        pinView.setLineWidth(getResources().getDimensionPixelSize(R.dimen.pv_pin_view_item_line_width));
-//        pinView.setAnimationEnable(true);// start animation when adding text
 }
 
 

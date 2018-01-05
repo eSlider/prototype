@@ -162,7 +162,7 @@ public class BackActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.search:
+                    case R.id.location:
 //                        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
 //                        startActivity(intent);
                         break;

@@ -46,7 +46,7 @@ public class Web3Utils {
             Log.d(TAG, "testWeb3: ");
             // We start by creating a new web3j instance to connect to remote nodes on the network.
             Web3j web3j = Web3jFactory.build(new HttpService(
-                    "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL"));  // FIXME: Enter your Infura token here;
+                    Constants.URL.ETH_NETWORK));  // FIXME: Enter your Infura token here;
             try {
                 Log.d(TAG, "Connected to Ethereum client version: "
                         + web3j.web3ClientVersion().send().getWeb3ClientVersion());
@@ -72,7 +72,7 @@ public class Web3Utils {
                 wallet.setPassword((String) args[1]);
                 wallet.setPublicKey(credentials.getEcKeyPair().getPublicKey());
                 wallet.setPrivateKey(credentials.getEcKeyPair().getPrivateKey());
-
+                Constants.wallet = wallet;
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NoSuchAlgorithmException e) {
@@ -110,7 +110,9 @@ public class Web3Utils {
             ed.putString(Constants.wallet_file, wallet.getFile());
             ed.putString(Constants.wallet_publicKey, wallet.getPublicKey().toString());
             ed.putString(Constants.wallet_privateKey, wallet.getPrivateKey().toString());
+            ed.putBoolean(Constants.save_recovery,  false);
             ed.commit();
+
 
         }
     }
@@ -127,7 +129,7 @@ public class Web3Utils {
                 String TAG = "web3";
                 // We start by creating a new web3j instance to connect to remote nodes on the network.
                 Web3j web3j = Web3jFactory.build(new HttpService(
-                        "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL"));  // FIXME: Enter your Infura token here;
+                        Constants.URL.ETH_NETWORK));  // FIXME: Enter your Infura token here;
                 try {
                     EthGetBalance ethGetBalance = web3j
                             .ethGetBalance(Constants.wallet.getAddress(), DefaultBlockParameterName.LATEST)
@@ -169,14 +171,14 @@ public class Web3Utils {
             try {
                 // We start by creating a new web3j instance to connect to remote nodes on the network.
                 Web3j web3j = Web3jFactory.build(new HttpService(
-                        "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL"));  // FIXME: Enter your Infura token here;
+                        Constants.URL.ETH_NETWORK));  // FIXME: Enter your Infura token here;
                 Credentials credentials =
                         WalletUtils.loadCredentials(
                                 Constants.wallet.getPassword(),
                                 new File(Constants.wallet.getFile()));//TODO заменить на внутренний файл-ключ
                 BigDecimal amount = Convert.toWei(args[1], Convert.Unit.ETHER);
                 System.out.println("Sending " + args[1] + " ("
-                        + Convert.fromWei(args[1], Convert.Unit.ETHER).toPlainString() + " cc€)");
+                        + Convert.fromWei(args[1], Convert.Unit.ETHER).toPlainString() + " eth)");
 
                 TransactionReceipt transferReceipt = Transfer.sendFunds(
                         web3j, credentials,
@@ -193,6 +195,11 @@ public class Web3Utils {
                         + amount + "/"
                         + transferReceipt.getTransactionHash(), HttpMethod.GET, null, Void.class);
 
+//                template.exchange(Constants.URL.SAVE_PAID
+//                        + transferReceipt.getFrom() + "/"
+//                        + transferReceipt.getTo() + "/"
+//                        + args[3] + "/"
+//                        + transferReceipt.getTransactionHash(), HttpMethod.GET, null, Void.class);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -211,7 +218,7 @@ public class Web3Utils {
             try {
                 // We start by creating a new web3j instance to connect to remote nodes on the network.
                 Web3j web3j = Web3jFactory.build(new HttpService(
-                        "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL"));  // FIXME: Enter your Infura token here;
+                        Constants.URL.ETH_NETWORK));  // FIXME: Enter your Infura token here;
                 EthGetTransactionCount send = web3j.ethGetTransactionCount(Constants.wallet.getAddress(), DefaultBlockParameterName.LATEST).send();
                 System.out.println(send.getTransactionCount());
 

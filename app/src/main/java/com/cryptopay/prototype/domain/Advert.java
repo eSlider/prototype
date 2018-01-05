@@ -23,6 +23,13 @@ public class Advert {
     @JsonProperty("longitude")
     private double longitude;
 
+    @JsonProperty("tel")
+    private String tel;
+    @JsonProperty("site")
+    private String site;
+    @JsonProperty("email")
+    private String email;
+
     @JsonProperty("typeItem")
     private TypeItem typeItem;
 
@@ -111,5 +118,29 @@ public class Advert {
 
     public void setTypeItem(TypeItem typeItem) {
         this.typeItem = typeItem;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
