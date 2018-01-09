@@ -6,8 +6,8 @@ android {
         applicationId "com.cryptopay.prototype"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 5
-        versionName "5"
+        versionCode 6
+        versionName "6"
         multiDexEnabled true //Add this
 
     }

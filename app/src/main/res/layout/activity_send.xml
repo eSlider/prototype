@@ -16,103 +16,120 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/address_recepient_title"
+                    android:textSize="10pt"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/address_recepient_title"
-                        android:textSize="10pt"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/et_address_recepient"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_input_address_recepient"
-                        android:paddingTop="10dp"
-                        android:textAlignment="center"
-                        android:textSize="10pt"
-                        android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/et_address_recepient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_input_address_recepient"
+                    android:paddingTop="10dp"
+                    android:textAlignment="center"
+                    android:textSize="10pt"
+                    android:textStyle="bold" />
 
                 <Button
-                    android:layout_gravity="right"
                     android:id="@+id/btnCopyAddressRecepient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Copy"
-                    android:textColor="@color/whiteColor"
-                    android:paddingRight="20dp"
-                    android:paddingLeft="20dp"
+                    android:layout_gravity="right"
+                    android:background="@color/colorPrimaryDark"
                     android:drawableRight="@mipmap/ic_content_copy_white_24dp"
-                    android:background="@color/colorPrimaryDark" />
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Copy"
+                    android:textColor="@color/whiteColor" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/amount_title"
-                android:textSize="10pt"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/amount_title"
+                    android:textSize="10pt"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/et_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_input_amount"
-                android:inputType="numberDecimal"
-                android:paddingTop="10dp"
-                android:textAlignment="center"
-                android:textColor="@color/blackColor"
-                android:textSize="12pt"
-                android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/et_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_input_amount"
+                    android:inputType="numberDecimal"
+                    android:paddingTop="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/blackColor"
+                    android:textSize="12pt"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_balance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="2dp"
-                android:text="@string/text_your_balance"
-                android:textAlignment="textEnd"
-                android:textSize="6pt"
-                android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/cb_save_template"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="Save template"
-                android:textSize="10pt" />
+                <TextView
+                    android:id="@+id/tv_comission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/text_comission"
+                    android:textAlignment="textEnd"
+                    android:textSize="6pt"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_name_template"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/name_template_title"
-                android:textSize="7pt"
-                android:visibility="invisible" />
+                <TextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/text_your_balance"
+                    android:textAlignment="textEnd"
+                    android:textSize="6pt"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/et_template"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_input_name_template"
-                android:paddingTop="10dp"
-                android:textColor="@color/blackColor"
-                android:textSize="10pt"
-                android:visibility="invisible" />
-        </LinearLayout>
+                <CheckBox
+                    android:id="@+id/cb_save_template"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="Save template"
+                    android:textSize="10pt" />
+
+                <TextView
+                    android:id="@+id/tv_name_template"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/name_template_title"
+                    android:textSize="7pt"
+                    android:visibility="invisible" />
+
+                <EditText
+                    android:id="@+id/et_template"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_input_name_template"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/blackColor"
+                    android:textSize="10pt"
+                    android:visibility="invisible" />
+            </LinearLayout>
+        </ScrollView>
 
         <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/fab_send"

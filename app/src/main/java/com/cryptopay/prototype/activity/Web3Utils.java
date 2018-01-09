@@ -110,7 +110,7 @@ public class Web3Utils {
             ed.putString(Constants.wallet_file, wallet.getFile());
             ed.putString(Constants.wallet_publicKey, wallet.getPublicKey().toString());
             ed.putString(Constants.wallet_privateKey, wallet.getPrivateKey().toString());
-            ed.putBoolean(Constants.save_recovery,  false);
+            ed.putBoolean(Constants.save_recovery, false);
             ed.commit();
 
 
@@ -162,52 +162,6 @@ public class Web3Utils {
         }
     }
 
-    public static class Send extends AsyncTask<String, Void, Void> {
-
-
-        @Override
-        protected Void doInBackground(String... args) {
-
-            try {
-                // We start by creating a new web3j instance to connect to remote nodes on the network.
-                Web3j web3j = Web3jFactory.build(new HttpService(
-                        Constants.URL.ETH_NETWORK));  // FIXME: Enter your Infura token here;
-                Credentials credentials =
-                        WalletUtils.loadCredentials(
-                                Constants.wallet.getPassword(),
-                                new File(Constants.wallet.getFile()));//TODO заменить на внутренний файл-ключ
-                BigDecimal amount = Convert.toWei(args[1], Convert.Unit.ETHER);
-                System.out.println("Sending " + args[1] + " ("
-                        + Convert.fromWei(args[1], Convert.Unit.ETHER).toPlainString() + " eth)");
-
-                TransactionReceipt transferReceipt = Transfer.sendFunds(
-                        web3j, credentials,
-                        args[0],  // you can put any address here
-                        amount, Convert.Unit.WEI) // 1 wei = 10^-18 Ether
-                        .send();
-                System.out.println("Transaction complete, view it at https://rinkeby.etherscan.io/tx/"
-                        + transferReceipt.getTransactionHash());
-
-                RestTemplate template = new RestTemplate();
-                template.exchange(Constants.URL.SAVE_TRANSACTION
-                        + transferReceipt.getFrom() + "/"
-                        + transferReceipt.getTo() + "/"
-                        + amount + "/"
-                        + transferReceipt.getTransactionHash(), HttpMethod.GET, null, Void.class);
-
-//                template.exchange(Constants.URL.SAVE_PAID
-//                        + transferReceipt.getFrom() + "/"
-//                        + transferReceipt.getTo() + "/"
-//                        + args[3] + "/"
-//                        + transferReceipt.getTransactionHash(), HttpMethod.GET, null, Void.class);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-    }
 
     public static class GetAllTransactions extends AsyncTask<String, Void, Void> {
 

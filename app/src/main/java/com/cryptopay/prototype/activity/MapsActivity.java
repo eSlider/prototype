@@ -244,7 +244,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         }
-        if (from == ShopActivity.SWITCH_FROM_SHOP) {
+        if (from == ShopSectionActivity.SWITCH_FROM_SHOP) {
             Advert advert = Constants.advertDTO.getData().get(0);
             if (advert.getLatitude() != 0d && advert.getLongitude() != 0d) {
                 LatLng latLng = new LatLng(advert.getLatitude(), advert.getLongitude());
@@ -281,8 +281,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onInfoWindowClick(Marker marker) {
         Advert advert = (Advert) marker.getTag();
         if (advert != null) {
-            ShopActivity.advert = advert;
-            Intent intent = new Intent(MapsActivity.this, ShopActivity.class);
+            ShopSectionActivity.advert = advert;
+            Intent intent = new Intent(MapsActivity.this, ShopSectionActivity.class);
             startActivity(intent);
         }
     }

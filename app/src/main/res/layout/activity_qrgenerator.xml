@@ -10,65 +10,73 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         android:background="@color/whiteColor"
-        android:orientation="vertical"
-        android:layout_margin="5dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="@string/title_your_address"
-            android:textAlignment="center"
-            android:textSize="8pt"
-            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textAlignment="center"
-            android:textSize="8pt"
-            android:textStyle="bold" />
-        <Button
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/btnCopyAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Copy"
-            android:textColor="@color/whiteColor"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            android:drawableRight="@mipmap/ic_content_copy_white_24dp"
-            android:background="@color/colorPrimaryDark" />
-        <TextView
-            android:id="@+id/tv_belov"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/title_qrcode"
-            android:textAlignment="center"
-            android:textSize="12pt"
-            android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:layout_margin="5dp"
-            android:layout_below="@+id/tv_belov">
-
-            <ImageView
-                android:id="@+id/image"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="100dp" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/title_your_address"
+                android:textAlignment="center"
+                android:textSize="8pt"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:textSize="8pt"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnCopyAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimaryDark"
+                android:drawableRight="@mipmap/ic_content_copy_white_24dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Copy"
+                android:textColor="@color/whiteColor" />
+
+            <TextView
+                android:id="@+id/tv_belov"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/title_qrcode"
+                android:textAlignment="center"
+                android:textSize="12pt"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_below="@+id/tv_belov"
+                android:layout_margin="5dp">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp" />
+            </LinearLayout>
+
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>

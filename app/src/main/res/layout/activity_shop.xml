@@ -20,16 +20,13 @@
         <!--android:id="@+id/tv_shop_cart"/>-->
     </android.support.v7.widget.Toolbar>
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/send_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/shop_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
 
         <!--<android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"-->
@@ -42,75 +39,61 @@
         <!--android:src="@mipmap/ic_input_white_24dp"-->
         <!--app:backgroundTint="@color/colorPrimary" />-->
 
+
+        <android.support.design.widget.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
+            android:background="@color/whiteColor"
 
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:weightSum="10"
-                android:orientation="horizontal">
+                android:layout_margin="2dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:orientation="horizontal"
+                android:background="@color/colorPrimary"
+                android:weightSum="2"
+                android:id="@+id/ll_push_order">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_weight="9"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_shopcart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="10"
-                        android:gravity="center_vertical"
-                        android:text="make your order"
-                        android:textColor="@color/whiteColor"
-                        android:textSize="8pt"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/tv_eth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="10"
-                        android:gravity="center_vertical"
-                        android:text=""
-                        android:textColor="@color/whiteColor"
-                        android:textSize="8pt"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/tv_shopcart_eth"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="12"
-                        android:text="TOTAL: 0.0 eth"
-                        android:textColor="@color/whiteColor"
-                        android:textSize="8pt"
-                        android:textStyle="bold"
-                        android:paddingBottom="3dp"/>
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_buy"
+                <TextView
+                    android:id="@+id/tv_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/whiteColor"
+                    android:textStyle="bold"
+                    android:textSize="8pt"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:background="@color/whiteColor"
-                    android:text="BUY"
-
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="10pt"
-                    android:textStyle="bold" />
+                    android:text="Cart: 0"/>
+                <TextView
+                    android:id="@+id/tv_summa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:textSize="8pt"
+                    android:layout_weight="1"
+                    android:textColor="@color/whiteColor"
+                    android:textStyle="bold"
+                    android:text="Total: 0.00 euro"/>
 
             </LinearLayout>
 
         </android.support.design.widget.AppBarLayout>
-    </android.support.design.widget.CoordinatorLayout>
+        </android.support.design.widget.BottomNavigationView>
 
 </LinearLayout>

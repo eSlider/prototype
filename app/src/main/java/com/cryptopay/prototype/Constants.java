@@ -15,7 +15,8 @@ public class Constants {
     public static TransactionDTO transactionDTO = new TransactionDTO();
     public static int CART_COUNT = 0;
     public static Advert advert;
-    public static Wallet wallet = new Wallet();;
+    public static Wallet wallet = new Wallet();
+    ;
     public static float balance = 0l;
 
     //saving preferences
@@ -31,20 +32,31 @@ public class Constants {
 
     public static class URL {
         public static String PORT = "";
-        public static String HOST = "http://95.85.8.20"+PORT+"/";
-//        public static String HOST = "http://192.168.0.104:8080"+PORT+"/";
-        public static String FIND_ALL_ADVERT = HOST+"findalladvert";
-        public static String FIND_ALL_ITEM = HOST+"findallitembyid";
-        public static String GET_ETH_PRICE = HOST+"getethprice";
-        public static String GET_TEST_ETH = HOST+"gettesteth/"+wallet.getAddress();
-        public static String FIND_ALL_TRANSACTION = HOST+"findalltransactionbyaddress/"+wallet.getAddress();
-        public static String FIND_ALL_TYPE = HOST+"findalltype";
-        public static String GET_STATUS = HOST+"getstatus/"+wallet.getAddress();
-        public static String SAVE_TRANSACTION = HOST+"savetransaction/";
-        public static String SAVE_PAID = HOST+"savepaid/";
+
+        //PRODUCTION
+
+//        public static String HOST = "http://95.85.8.20" + PORT + "/";
+//        public static String ETH_NETWORK = "https://mainnet.infura.io/oShbYdHLGQhi0rn1audL";
+//        public static String COMISSION_WALLET = "0x73246796E98b8d1991473180246290f78A569a0c";
+
+        //TEST
+
+        public static String HOST = "http://192.168.0.104:8080" + PORT + "/";
+        public static String ETH_NETWORK = "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL ";
+        public static String COMISSION_WALLET = "0xB2a7a85E7a104B069508594b255da3f9aA0ecbaF";
+
+
+        public static String FIND_ALL_ADVERT = HOST + "findalladvert";
+        public static String FIND_ALL_ITEM = HOST + "findallitembyid";
+        public static String GET_ETH_PRICE = HOST + "getethprice";
+        public static String GET_TEST_ETH = HOST + "gettesteth/" + wallet.getAddress();
+        public static String FIND_ALL_TRANSACTION = HOST + "findalltransactionbyaddress/" + wallet.getAddress();
+        public static String FIND_ALL_TYPE = HOST + "findalltype";
+        public static String GET_STATUS = HOST + "getstatus/" + wallet.getAddress();
+        public static String SAVE_TRANSACTION = HOST + "savetransaction/";
+        public static String SAVE_PAID = HOST + "savepaid/";
         public static String TRANSACTION_VIEWER = "https://etherscan.io/tx/";
-//        public static String ETH_NETWORK = "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL ";
-        public static String ETH_NETWORK = "https://mainnet.infura.io/oShbYdHLGQhi0rn1audL";
+
 
     }
 

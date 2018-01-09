@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
-            }54
+            }
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -346,8 +346,8 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
     }
 
     public void switchContent(Advert advert) {
-        ShopActivity.advert = advert;
-        Intent intent = new Intent(MainActivity.this, ShopActivity.class);
+        ShopSectionActivity.advert = advert;
+        Intent intent = new Intent(MainActivity.this, ShopSectionActivity.class);
         startActivity(intent);
     }
 

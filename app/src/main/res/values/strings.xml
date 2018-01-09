@@ -5,6 +5,7 @@
     <string name="profile_title">profile</string>
     <string name="search_title">search</string>
     <string name="location_title">location</string>
+    <string name="share_title">location</string>
     <string name="filter_title">filter</string>
     <string name="view_nav_open">Open</string>
     <string name="view_nav_close">Close</string>
@@ -13,12 +14,14 @@
     <string name="map_tab">Map</string>
     <string name="history_tab">History</string>
     <string name="tab_4">Tab 4</string>
-    <string name="btn_buy">buy</string>
+    <string name="btn_buy">BUY</string>
+    <string name="btn_order">ORDER</string>
     <string name="cart_title">Cart :</string>
     <string name="menu_in_cart">in cart</string>
     <string name="send_title">send</string>
     <string name="recovery_title">recovery account</string>
     <string name="text_your_balance">Your balance</string>
+    <string name="text_comission">Comission 0 eth</string>
     <string name="purse_title">Purse</string>
     <string name="setting_title">Settings</string>
     <string name="templates_menu">templates</string>
@@ -35,6 +38,7 @@
     <string name="change_title">Change</string>
     <string name="recive_title">Recive</string>
     <string name="danger_address_recepient_isempty">Address recepient is empty!</string>
+    <string name="danger_wrong_address_ethereum_wallet">Wrong ethereum address recepient!</string>
     <string name="danger_not_enough_money">Not enough money</string>
     <string name="danger_make_you_order">make your order</string>
     <string name="danger_error_rate_eth">error for rate ethereum</string>

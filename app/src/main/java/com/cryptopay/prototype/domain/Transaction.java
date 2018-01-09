@@ -11,6 +11,7 @@ public class Transaction {
     private String value;
     private String hashTx;
     private String dateTx;
+    private String rate;
 
     public Transaction() {
     }
@@ -61,5 +62,13 @@ public class Transaction {
 
     public void setDateTx(String dateTx) {
         this.dateTx = dateTx;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
     }
 }
