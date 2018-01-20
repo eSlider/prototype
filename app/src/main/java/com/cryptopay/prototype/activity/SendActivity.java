@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -92,7 +94,7 @@ public class SendActivity extends AppCompatActivity {
         if (totalPrice > 0.0d && !address.isEmpty()) {
 
             etAddressRecepient.setText(address.trim());
-            comission = String.format("%.18f" ,totalPrice * 0.01);
+            comission = String.format("%.18f" ,totalPrice * 0.01).replace(",", ".");
             tvComission.setText("Comission: " + comission.replace(",", ".") + " (1%)");
             etAmount.setText(String.format("%.18f", totalPrice).replace(",", "."));
             fabSend.requestFocus();
@@ -120,13 +122,13 @@ public class SendActivity extends AppCompatActivity {
                 if (etAddressRecepient.equals("")) {
                     Toast.makeText(SendActivity.this, R.string.danger_address_recepient_isempty, Toast.LENGTH_LONG).show();
 
-                } else if (Constants.balance <= (Double.parseDouble(etAmount.getText().toString())+Double.parseDouble(comission))) {
+                } else if (Constants.balance <= (Double.parseDouble(etAmount.getText().toString().replace(",", "."))+Double.parseDouble(comission.replace(",", ".")))) {
                     Toast.makeText(SendActivity.this, R.string.danger_not_enough_money, Toast.LENGTH_LONG).show();
 
                 } else {
 //                    BigDecimal amount = Convert.toWei(etAmount.getText(), Convert.Unit.ETHER);
                     mLoadingView.showLoadingIndicator();
-                    new Send().execute(etAddressRecepient.getText().toString(), etAmount.getText().toString(), String.valueOf(eth_price), comission);
+                    new Send().execute(etAddressRecepient.getText().toString(), etAmount.getText().toString(), String.valueOf(eth_price));
                     //sabe template
                     if (cbSaveTemplate.isChecked() && !etTemplate.getText().equals("")) {
                         new DBHelper(SendActivity.this).saveTemplate(new Template(etTemplate.getText().toString(), etAddressRecepient.getText().toString()));
@@ -136,7 +138,9 @@ public class SendActivity extends AppCompatActivity {
                 }
             }
         });
-        etAmount.requestFocus();
+//        fabSend.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
     }
 
     private void initToolbar() {
@@ -219,6 +223,7 @@ public class SendActivity extends AppCompatActivity {
                         args[0],  // you can put any address here
                         amount, Convert.Unit.WEI) // 1 wei = 10^-18 Ether
                         .send();
+
                 RestTemplate template = new RestTemplate();
                 template.exchange(Constants.URL.SAVE_TRANSACTION
                         + transferReceipt.getFrom() + "/"
@@ -226,26 +231,7 @@ public class SendActivity extends AppCompatActivity {
                         + amount + "/"
                         + transferReceipt.getTransactionHash() + "/"
                         + args[2], HttpMethod.GET, null, Void.class);
-                //комиссия
-                if (!args[3].equals("")) {
-                    BigDecimal amount_comission = Convert.toWei(args[3], Convert.Unit.ETHER);
 
-                    transferReceipt = Transfer.sendFunds(
-                            web3j, credentials,
-                            Constants.URL.COMISSION_WALLET,  // you can put any address here
-                            amount_comission, Convert.Unit.WEI) // 1 wei = 10^-18 Ether
-                            .send();
-
-
-                    template = new RestTemplate();
-                    template.exchange(Constants.URL.SAVE_TRANSACTION
-                            + transferReceipt.getFrom() + "/"
-                            + transferReceipt.getTo() + "/"
-                            + amount_comission + "/"
-                            + transferReceipt.getTransactionHash() + "/"
-                            + args[2], HttpMethod.GET, null, Void.class);
-
-                }
                 System.out.println("Transaction complete, view it at https://rinkeby.etherscan.io/tx/"
                         + transferReceipt.getTransactionHash());
 
@@ -275,11 +261,68 @@ public class SendActivity extends AppCompatActivity {
                 setResult(RESULT_CANCELED, intent);
                 finish();
             } else {
+                if (!comission.equals("")) {
+                    new SendComission().execute(Constants.URL.COMISSION_WALLET, comission, String.valueOf(eth_price));
+                }
                 setResult(RESULT_OK, intent);
                 finish();
             }
         }
     }
 
+    private class SendComission extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected String doInBackground(String... args) {
+
+            try {
+                // We start by creating a new web3j instance to connect to remote nodes on the network.
+                Web3j web3j = Web3jFactory.build(new HttpService(
+                        Constants.URL.ETH_NETWORK));  // FIXME: Enter your Infura token here;
+                Credentials credentials =
+                        WalletUtils.loadCredentials(
+                                Constants.wallet.getPassword(),
+                                new File(Constants.wallet.getFile()));//TODO заменить на внутренний файл-ключ
+
+
+
+                RestTemplate template = new RestTemplate();
+
+                //комиссия
+
+                    BigDecimal amount_comission = Convert.toWei(args[1], Convert.Unit.ETHER);
+
+                    TransactionReceipt transferReceipt = Transfer.sendFunds(
+                            web3j, credentials,
+                            Constants.URL.COMISSION_WALLET,  // you can put any address here
+                            amount_comission, Convert.Unit.WEI) // 1 wei = 10^-18 Ether
+                            .send();
+
+                    template.exchange(Constants.URL.SAVE_TRANSACTION
+                            + transferReceipt.getFrom() + "/"
+                            + transferReceipt.getTo() + "/"
+                            + amount_comission + "/"
+                            + transferReceipt.getTransactionHash() + "/"
+                            + args[2], HttpMethod.GET, null, Void.class);
+
+
+                System.out.println("Transaction complete, view it at https://rinkeby.etherscan.io/tx/"
+                        + transferReceipt.getTransactionHash());
+
+//                template.exchange(Constants.URL.SAVE_PAID
+//                        + transferReceipt.getFrom() + "/"
+//                        + transferReceipt.getTo() + "/"
+//                        + args[3] + "/"
+//                        + transferReceipt.getTransactionHash(), HttpMethod.GET, null, Void.class);
+
+            } catch (Exception e) {
+                return e.toString();
+            }
+
+            return null;
+        }
+
+    }
 
 }

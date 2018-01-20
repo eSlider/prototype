@@ -139,7 +139,8 @@
             android:layout_marginBottom="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
             android:src="@mipmap/ic_input_white_24dp"
-            app:backgroundTint="@color/colorPrimary" />
+            app:backgroundTint="@color/colorPrimary"
+           />
     </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

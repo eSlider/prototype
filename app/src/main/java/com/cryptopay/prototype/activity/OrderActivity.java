@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -22,17 +19,14 @@ import com.cryptopay.prototype.R;
 import com.cryptopay.prototype.activity.general.LoadingDialog;
 import com.cryptopay.prototype.activity.general.LoadingView;
 import com.cryptopay.prototype.adapter.OrderAdapter;
-import com.cryptopay.prototype.adapter.OrderAdapter1;
-import com.cryptopay.prototype.domain.Advert;
+import com.cryptopay.prototype.adapter.OrderListAdapter;
 import com.cryptopay.prototype.domain.Item;
-import com.cryptopay.prototype.domain.OrderItem;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class OrderActivity extends AppCompatActivity implements OrderAdapter.OnItemClick {
@@ -43,7 +37,7 @@ public class OrderActivity extends AppCompatActivity implements OrderAdapter.OnI
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<Item> items;
-    private OrderAdapter1 mAdapter;
+    private OrderListAdapter mAdapter;
     private LoadingView mLoadingView;
     private double eth_price = 0.0d;
     private Button btnBuy;

@@ -365,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
             }
-        }, 4000);
+        }, 3000);
     }
 
     @Override
@@ -378,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements AdvertListAdapter
         mLoadingView.hideLoadingIndicator();
         Snackbar snackbar = Snackbar.make(recyclerView, "Error loading adverts", Snackbar.LENGTH_LONG)
                 .setAction("Retry", v -> new AdvertTask().execute());
-        snackbar.setDuration(4000);
+        snackbar.setDuration(3000);
         snackbar.show();
     }
 

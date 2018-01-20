@@ -96,7 +96,7 @@ public class ShopActivity extends AppCompatActivity implements ShopListAdapter.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        mLoadingView.hideLoadingIndicator();
         if (requestCode == BUY_FROM_CART) {
             if (resultCode == RESULT_OK) {
                 intent.putExtra("paid", true);

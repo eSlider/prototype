@@ -14,16 +14,16 @@ import com.cryptopay.prototype.domain.OrderItem;
 
 import java.util.List;
 
-public class OrderAdapter1 extends RecyclerView.Adapter<OrderAdapter1.OrderViewHolder> {
+public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.OrderListViewHolder> {
 
     private List<OrderItem> items;
-    private final OrderAdapter1.OnItemClick mOnItemClick;
+    private final OrderListAdapter.OnItemClick mOnItemClick;
 
     public interface OnItemClick {
         void onItemClick(@NonNull Item item);
     }
 
-    public OrderAdapter1(List<OrderItem> items, OrderAdapter1.OnItemClick mOnItemClick) {
+    public OrderListAdapter(List<OrderItem> items, OrderListAdapter.OnItemClick mOnItemClick) {
         this.items = items;
         this.mOnItemClick = mOnItemClick;
     }
@@ -45,16 +45,16 @@ public class OrderAdapter1 extends RecyclerView.Adapter<OrderAdapter1.OrderViewH
     }
 
     @Override
-    public OrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public OrderListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 //        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.advert_item, parent, false);
         View view = inflater.inflate(R.layout.shop_item, parent, false);
-        return new OrderAdapter1.OrderViewHolder(view);
+        return new OrderListAdapter.OrderListViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(OrderViewHolder holder, final int position) {
+    public void onBindViewHolder(OrderListViewHolder holder, final int position) {
 
         Item item = items.get(position);
         holder.title.setText(item.getTitle());
@@ -73,14 +73,14 @@ public class OrderAdapter1 extends RecyclerView.Adapter<OrderAdapter1.OrderViewH
         this.items = items;
     }
 
-    public static class OrderViewHolder extends RecyclerView.ViewHolder {
+    public static class OrderListViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
         TextView title;
         TextView price;
 //        ImageView pic;
 
-        public OrderViewHolder(View itemView) {
+        public OrderListViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.shop_card_view);
             title = (TextView) itemView.findViewById(R.id.shop_tv_title);

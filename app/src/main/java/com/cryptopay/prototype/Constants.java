@@ -41,7 +41,7 @@ public class Constants {
 
         //TEST
 
-        public static String HOST = "http://192.168.0.104:8080" + PORT + "/";
+        public static String HOST = "http://192.168.0.102:8080" + PORT + "/";
         public static String ETH_NETWORK = "https://rinkeby.infura.io/oShbYdHLGQhi0rn1audL ";
         public static String COMISSION_WALLET = "0xB2a7a85E7a104B069508594b255da3f9aA0ecbaF";
 
